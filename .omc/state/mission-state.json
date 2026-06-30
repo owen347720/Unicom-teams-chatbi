@@ -1,0 +1,141 @@
+{
+  "updatedAt": "2026-06-30T08:40:31.349Z",
+  "missions": [
+    {
+      "id": "session:7b8d1b3f-3764-4dff-8d56-9dd7dc163f42:none",
+      "source": "session",
+      "name": "none",
+      "objective": "Session mission",
+      "createdAt": "2026-06-30T07:13:41.373Z",
+      "updatedAt": "2026-06-30T08:40:31.349Z",
+      "status": "running",
+      "workerCount": 9,
+      "taskCounts": {
+        "total": 9,
+        "pending": 0,
+        "blocked": 0,
+        "inProgress": 2,
+        "completed": 7,
+        "failed": 0
+      },
+      "agents": [
+        {
+          "name": "claude:a0f7313",
+          "role": "claude",
+          "ownership": "a0f7313e9f6f7fff9",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-06-30T07:17:39.807Z"
+        },
+        {
+          "name": "code-reviewer:ac61f86",
+          "role": "code-reviewer",
+          "ownership": "ac61f863c8f9bea06",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-06-30T07:23:36.791Z"
+        },
+        {
+          "name": "claude:a09f76e",
+          "role": "claude",
+          "ownership": "a09f76efceb59c377",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-06-30T07:50:38.699Z"
+        },
+        {
+          "name": "claude:ab4d2a2",
+          "role": "claude",
+          "ownership": "ab4d2a225e888e971",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-06-30T07:56:12.632Z"
+        },
+        {
+          "name": "claude:a6f36f8",
+          "role": "claude",
+          "ownership": "a6f36f8abb73c8294",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-06-30T08:18:54.895Z"
+        },
+        {
+          "name": "claude:a9004dd",
+          "role": "claude",
+          "ownership": "a9004dd94041db85c",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-06-30T08:23:20.359Z"
+        },
+        {
+          "name": "claude:a88d247",
+          "role": "claude",
+          "ownership": "a88d2474d5bb46df9",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-06-30T08:37:38.087Z"
+        },
+        {
+          "name": "claude:a95d5d0",
+          "role": "claude",
+          "ownership": "a95d5d0c74517ec60",
+          "status": "running",
+          "currentStep": null,
+          "latestUpdate": null,
+          "completedSummary": null,
+          "updatedAt": "2026-06-30T08:40:31.289Z"
+        },
+        {
+          "name": "claude:ae3269a",
+          "role": "claude",
+          "ownership": "ae3269a06f1f11b27",
+          "status": "running",
+          "currentStep": null,
+          "latestUpdate": null,
+          "completedSummary": null,
+          "updatedAt": "2026-06-30T08:40:31.349Z"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "session-stop:a88d2474d5bb46df9:2026-06-30T08:37:38.087Z",
+          "at": "2026-06-30T08:37:38.087Z",
+          "kind": "completion",
+          "agent": "claude:a88d247",
+          "detail": "completed",
+          "sourceKey": "session-stop:a88d2474d5bb46df9"
+        },
+        {
+          "id": "session-start:a95d5d0c74517ec60:2026-06-30T08:40:31.289Z",
+          "at": "2026-06-30T08:40:31.289Z",
+          "kind": "update",
+          "agent": "claude:a95d5d0",
+          "detail": "started claude:a95d5d0",
+          "sourceKey": "session-start:a95d5d0c74517ec60"
+        },
+        {
+          "id": "session-start:ae3269a06f1f11b27:2026-06-30T08:40:31.349Z",
+          "at": "2026-06-30T08:40:31.349Z",
+          "kind": "update",
+          "agent": "claude:ae3269a",
+          "detail": "started claude:ae3269a",
+          "sourceKey": "session-start:ae3269a06f1f11b27"
+        }
+      ]
+    }
+  ]
+}

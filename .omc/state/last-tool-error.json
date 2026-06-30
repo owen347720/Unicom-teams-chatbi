@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd /Users/owen/coding/2026-自学/Text2Sql/vanna-service && python -m pytest tests/ -v 2>&1\",\"timeout\":120000,\"description\":\"Run all tests in vanna-service\"}",
+  "error": "Exit code 1\n============================= test session starts ==============================\nplatform darwin -- Python 3.13.12, pytest-8.3.5, pluggy-1.5.0 -- /Users/owen/miniconda3/bin/python\ncachedir: .pytest_cache\nrootdir: /Users/owen/coding/2026-自学/Text2Sql/vanna-service\nplugins: anyio-4.10.0\ncollecting ... collected 60 items\n\ntests/test_chromadb_backup.py::TestBackupChromaDB::test_backup_creates_json_file PASSED [  1%]\ntests/test_chromadb_backup.py::TestBackupChromaDB::test_backup_auto_gener...",
+  "timestamp": "2026-06-30T08:50:22.739Z",
+  "retry_count": 2
+}

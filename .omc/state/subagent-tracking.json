@@ -1,0 +1,85 @@
+{
+  "agents": [
+    {
+      "agent_id": "a0f7313e9f6f7fff9",
+      "agent_type": "claude",
+      "started_at": "2026-06-30T07:13:41.373Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-06-30T07:17:39.807Z",
+      "duration_ms": 238434
+    },
+    {
+      "agent_id": "ac61f863c8f9bea06",
+      "agent_type": "oh-my-claudecode:code-reviewer",
+      "started_at": "2026-06-30T07:21:30.716Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-06-30T07:23:36.791Z",
+      "duration_ms": 126075
+    },
+    {
+      "agent_id": "a09f76efceb59c377",
+      "agent_type": "claude",
+      "started_at": "2026-06-30T07:44:56.782Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-06-30T07:50:38.699Z",
+      "duration_ms": 341917
+    },
+    {
+      "agent_id": "ab4d2a225e888e971",
+      "agent_type": "claude",
+      "started_at": "2026-06-30T07:53:17.910Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-06-30T07:56:12.632Z",
+      "duration_ms": 174722
+    },
+    {
+      "agent_id": "a6f36f8abb73c8294",
+      "agent_type": "claude",
+      "started_at": "2026-06-30T07:58:37.834Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-06-30T08:18:54.895Z",
+      "duration_ms": 1217061
+    },
+    {
+      "agent_id": "a9004dd94041db85c",
+      "agent_type": "claude",
+      "started_at": "2026-06-30T08:21:03.558Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-06-30T08:23:20.359Z",
+      "duration_ms": 136801
+    },
+    {
+      "agent_id": "a88d2474d5bb46df9",
+      "agent_type": "claude",
+      "started_at": "2026-06-30T08:25:34.640Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-06-30T08:37:38.087Z",
+      "duration_ms": 723447
+    },
+    {
+      "agent_id": "a95d5d0c74517ec60",
+      "agent_type": "claude",
+      "started_at": "2026-06-30T08:40:31.289Z",
+      "parent_mode": "none",
+      "status": "running"
+    },
+    {
+      "agent_id": "ae3269a06f1f11b27",
+      "agent_type": "claude",
+      "started_at": "2026-06-30T08:40:31.349Z",
+      "parent_mode": "none",
+      "status": "running"
+    }
+  ],
+  "total_spawned": 8,
+  "total_completed": 78,
+  "total_failed": 0,
+  "last_updated": "2026-06-30T08:40:31.451Z"
+}
