@@ -1,6 +1,6 @@
 # backend/app/config.py
 
-import os
+from pydantic import ConfigDict
 from pydantic_settings import BaseSettings
 
 
@@ -28,9 +28,11 @@ class Settings(BaseSettings):
     # 日志
     log_level: str = "INFO"
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+    model_config = ConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+    )
 
 
 settings = Settings()
