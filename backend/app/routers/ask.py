@@ -53,15 +53,6 @@ def generate_sql(body: GenerateSQLRequest, db: Session = Depends(get_db)):
             status_code=404, detail="Datasource not found or inactive"
         )
 
-    # 记录历史
-    history = QueryHistory(
-        datasource_id=body.datasource_id,
-        question=body.question,
-    )
-    db.add(history)
-    db.commit()
-    db.refresh(history)
-
     # 调用 Vanna Service
     try:
         with httpx.Client(timeout=settings.sql_timeout) as client:
@@ -79,8 +70,13 @@ def generate_sql(body: GenerateSQLRequest, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    # 更新历史记录
-    history.generated_sql = result.get("sql", "")
+    # Vanna 调用成功后再记录历史
+    history = QueryHistory(
+        datasource_id=body.datasource_id,
+        question=body.question,
+        generated_sql=result.get("sql", ""),
+    )
+    db.add(history)
     db.commit()
 
     return {
@@ -98,17 +94,6 @@ def execute_sql(body: ExecuteSQLRequest, db: Session = Depends(get_db)):
         raise HTTPException(
             status_code=404, detail="Datasource not found or inactive"
         )
-
-    # 记录历史
-    history = QueryHistory(
-        datasource_id=body.datasource_id,
-        question="",
-        final_sql=body.sql,
-        executed=True,
-    )
-    db.add(history)
-    db.commit()
-    db.refresh(history)
 
     # 解密密码并执行
     plaintext_password = decrypt(ds.password)
@@ -128,9 +113,16 @@ def execute_sql(body: ExecuteSQLRequest, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-    # 更新历史记录
-    history.result_rows = result.get("row_count", 0)
-    history.execution_time = result.get("execution_time", 0)
+    # 执行成功后再记录历史
+    history = QueryHistory(
+        datasource_id=body.datasource_id,
+        question="",
+        final_sql=body.sql,
+        executed=True,
+        result_rows=result.get("row_count", 0),
+        execution_time=result.get("execution_time", 0),
+    )
+    db.add(history)
     db.commit()
 
     return result

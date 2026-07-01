@@ -277,8 +277,15 @@ class DatasourceService:
                 host=host, port=port, user=username, password=password, database=database
             )
             start = _time.time()
-            raw_rows = client.execute(sql, settings={"max_result_rows": max_rows})
-            columns = [desc[0] for desc in client.description] if client.description else []
+            # Use cursor for column metadata (DB-API 2.0 compatible)
+            with client.cursor() as cursor:
+                cursor.execute(sql)
+                raw_rows = cursor.fetchmany(max_rows)
+                columns = (
+                    [desc[0] for desc in cursor.description]
+                    if cursor.description
+                    else []
+                )
             elapsed = _time.time() - start
             return {
                 "columns": columns,
