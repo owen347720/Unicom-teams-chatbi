@@ -1,6 +1,6 @@
 # backend/app/main.py
 
-import logging
+import asyncio
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 
 from app.config import settings
-from app.database import engine, init_db
+from app.database import init_db
 from app.routers import (
     ask_router,
     datasource_router,
@@ -38,7 +38,7 @@ async def lifespan(app: FastAPI):
     # Startup
     setup_logging()
     logger.info("Starting Text2SQL Backend API...")
-    init_db()
+    await asyncio.to_thread(init_db)
     logger.info("Database tables initialized")
     yield
     # Shutdown
