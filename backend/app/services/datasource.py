@@ -25,7 +25,7 @@ class DatasourceService:
         self.db = db
 
     def list_datasources(self) -> list[Datasource]:
-        """获取所有数据源列表（不包含加密密码）"""
+        """获取所有数据源列表（注意：返回的对象包含加密密码，API 层需脱敏）"""
         stmt = select(Datasource).order_by(Datasource.created_at.desc())
         return list(self.db.scalars(stmt).all())
 
@@ -103,18 +103,37 @@ class DatasourceService:
         logger.info(f"Updated datasource: {datasource_id}")
         return datasource
 
-    def delete_datasource(self, datasource_id: uuid.UUID) -> bool:
-        """删除数据源及其在 Vanna Service 中的训练数据。"""
+    def delete_datasource(self, datasource_id: uuid.UUID) -> dict:
+        """
+        删除数据源及其在 Vanna Service 中的训练数据。
+
+        Returns:
+            dict with success flag and training_data_removed count
+        """
         datasource = self.get_datasource(datasource_id)
         if datasource is None:
-            return False
+            return {"success": False, "training_data_removed": 0}
 
-        self._notify_vanna_delete(datasource_id)
+        # Count training data before deletion (FK cascade or manual cleanup)
+        from app.models.training import TrainingData
+        from sqlalchemy import func
 
+        count_result = (
+            self.db.query(func.count(TrainingData.id))
+            .filter(TrainingData.datasource_id == datasource_id)
+            .scalar()
+        )
+        training_removed = count_result or 0
+
+        # Delete from DB first
         self.db.delete(datasource)
         self.db.commit()
-        logger.info(f"Deleted datasource: {datasource_id}")
-        return True
+
+        # Then notify vanna-service (non-fatal if it fails)
+        self._notify_vanna_delete(datasource_id)
+
+        logger.info(f"Deleted datasource: {datasource_id} (training_data_removed: {training_removed})")
+        return {"success": True, "training_data_removed": training_removed}
 
     def test_connection(self, datasource_id: uuid.UUID) -> dict:
         """测试数据源连接。"""
