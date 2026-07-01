@@ -206,6 +206,91 @@ class DatasourceService:
             table_name,
         )
 
+    def _execute_sql_direct(
+        self,
+        db_type: str,
+        host: str,
+        port: int,
+        username: str,
+        password: str,
+        database: str,
+        sql: str,
+        timeout: int = 60,
+        max_rows: int = 1000,
+    ) -> dict:
+        """
+        直接执行 SQL 并返回结果。
+
+        Returns:
+            dict with columns, rows, row_count, execution_time, truncated
+        """
+        import time as _time
+
+        if db_type == "mysql":
+            import mysql.connector
+
+            conn = mysql.connector.connect(
+                host=host, port=port, user=username, password=password, database=database
+            )
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            start = _time.time()
+            raw_rows = cursor.fetchmany(max_rows)
+            columns = [desc[0] for desc in cursor.description] if cursor.description else []
+            elapsed = _time.time() - start
+            cursor.close()
+            conn.close()
+            return {
+                "columns": columns,
+                "rows": [list(row) for row in raw_rows],
+                "row_count": len(raw_rows),
+                "execution_time": round(elapsed, 3),
+                "truncated": False,
+            }
+
+        elif db_type == "postgresql":
+            import psycopg2
+
+            conn = psycopg2.connect(
+                host=host, port=port, user=username, password=password, dbname=database
+            )
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            start = _time.time()
+            raw_rows = cursor.fetchmany(max_rows)
+            columns = [desc[0] for desc in cursor.description] if cursor.description else []
+            elapsed = _time.time() - start
+            cursor.close()
+            conn.close()
+            return {
+                "columns": columns,
+                "rows": [list(row) for row in raw_rows],
+                "row_count": len(raw_rows),
+                "execution_time": round(elapsed, 3),
+                "truncated": False,
+            }
+
+        elif db_type == "clickhouse":
+            import clickhouse_driver
+
+            client = clickhouse_driver.Client(
+                host=host, port=port, user=username, password=password, database=database
+            )
+            start = _time.time()
+            raw_rows = client.execute(sql, settings={"max_result_rows": max_rows})
+            columns = [desc[0] for desc in client.description] if client.description else []
+            elapsed = _time.time() - start
+            return {
+                "columns": columns,
+                "rows": [list(row) for row in raw_rows],
+                "row_count": len(raw_rows),
+                "execution_time": round(elapsed, 3),
+                "truncated": False,
+            }
+
+        else:
+            raise ValueError(f"Unsupported database type: {db_type}")
+
     # ---- Internal methods ----
 
     def _test_connection_internal(
