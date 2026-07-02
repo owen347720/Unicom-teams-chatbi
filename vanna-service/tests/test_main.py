@@ -22,6 +22,7 @@ def mock_vanna_service():
     mock.generate_sql = MagicMock(return_value={
         "sql": "SELECT * FROM users WHERE name = 'test'",
         "confidence": 0.85,
+        "metrics": {"generation_seconds": 1.23},
         "similar_questions": [
             {"question": "查询用户", "sql": "SELECT * FROM users", "similarity": 0.9}
         ]
@@ -142,6 +143,7 @@ class TestGenerateSQL:
         assert "data" in data
         assert data["data"]["sql"] == "SELECT * FROM users WHERE name = 'test'"
         assert data["data"]["confidence"] == 0.85
+        assert data["data"]["metrics"]["generation_seconds"] == 1.23
         # 验证 service 方法被调用
         mock_vanna_service.generate_sql.assert_called_once_with(
             datasource_name="test_datasource",

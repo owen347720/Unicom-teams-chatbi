@@ -86,6 +86,7 @@ def generate_sql(body: GenerateSQLRequest, db: Session = Depends(get_db)):
     return {
         "sql": data.get("sql", ""),
         "confidence": data.get("confidence", 0),
+        "metrics": data.get("metrics", {}),
         "related_training_data": data.get(
             "related_training_data", data.get("similar_questions", [])
         ),

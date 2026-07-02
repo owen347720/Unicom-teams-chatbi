@@ -79,6 +79,23 @@ docker compose --env-file .env -f docker-compose.yml restart backend-api
 docker compose --env-file .env -f docker-compose.yml restart vanna-service
 ```
 
+Run the V1.0 benchmark:
+
+```bash
+cd /data1/text2sql/releases/amd64-verify
+python3 run_v1_benchmark.py \
+  --backend-url http://127.0.0.1:38000 \
+  --output-dir /data1/text2sql/benchmarks/v1.0-r3 \
+  --repeats 3
+```
+
+Benchmark outputs:
+
+- `results.jsonl`: full structured records
+- `results.csv`: spreadsheet-friendly records
+- `summary.json`: aggregate metrics
+- `report.md`: human-readable summary
+
 Load a replacement image:
 
 ```bash

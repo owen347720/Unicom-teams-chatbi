@@ -1,0 +1,14 @@
+{
+  "total_runs": 10,
+  "passed_runs": 4,
+  "pass_rate": 0.4,
+  "executable_runs": 4,
+  "executable_rate": 0.4,
+  "avg_score": 0.79,
+  "avg_generate_seconds": 18.075,
+  "p50_generate_seconds": 13.793,
+  "p95_generate_seconds": 46.348,
+  "avg_execute_seconds": 0.302,
+  "p95_execute_seconds": 1.077,
+  "avg_total_tokens_est": 2963.3
+}

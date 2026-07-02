@@ -87,6 +87,7 @@ class GenerateSQLData(BaseModel):
     sql: str
     confidence: float
     similar_questions: list
+    metrics: dict = {}
 
 
 class GenerateSQLResponse(BaseModel):
@@ -194,7 +195,8 @@ async def generate_sql(request: GenerateSQLRequest):
             data=GenerateSQLData(
                 sql=result["sql"],
                 confidence=result["confidence"],
-                similar_questions=result["similar_questions"]
+                similar_questions=result["similar_questions"],
+                metrics=result.get("metrics", {}),
             )
         )
     except Exception as e:

@@ -1,0 +1,124 @@
+[
+  {
+    "id": "mobile_count_by_community",
+    "category": "aggregate",
+    "question": "黄岐白沙村 有多少移网用户？",
+    "expected_tables": [
+      "yw_yh_zfb_daily"
+    ],
+    "expected_columns": [
+      "RESIDENT_AREA"
+    ]
+  },
+  {
+    "id": "mobile_list_by_community",
+    "category": "detail",
+    "question": "列出 （城中村）江夏村 的移网用户号码，最多100条",
+    "expected_tables": [
+      "yw_yh_zfb_daily"
+    ],
+    "expected_columns": [
+      "SERIAL_NUMBER",
+      "RESIDENT_AREA"
+    ],
+    "requires_limit": true
+  },
+  {
+    "id": "broadband_count_by_market",
+    "category": "aggregate",
+    "question": "广东培正学院 有多少宽带用户？",
+    "expected_tables": [
+      "edpi_broadband_user_daily"
+    ],
+    "expected_columns": [
+      "market_name"
+    ]
+  },
+  {
+    "id": "broadband_list_by_market",
+    "category": "detail",
+    "question": "列出 广州南方学院 的宽带账号和联系电话，最多100条",
+    "expected_tables": [
+      "edpi_broadband_user_daily"
+    ],
+    "expected_columns": [
+      "pppoe_account",
+      "market_name"
+    ],
+    "requires_limit": true
+  },
+  {
+    "id": "mixed_mobile_broadband_community",
+    "category": "mixed",
+    "question": "汇景新城 有哪些移网用户和宽带用户？",
+    "expected_tables": [
+      "yw_yh_zfb_daily",
+      "edpi_broadband_user_daily"
+    ],
+    "expected_columns": [
+      "RESIDENT_AREA"
+    ],
+    "requires_limit": true
+  },
+  {
+    "id": "mobile_top_communities",
+    "category": "ranking",
+    "question": "移网用户数最多的10个小区是哪些？",
+    "expected_tables": [
+      "yw_yh_zfb_daily"
+    ],
+    "expected_columns": [
+      "RESIDENT_AREA"
+    ],
+    "requires_group_by": true,
+    "requires_limit": true
+  },
+  {
+    "id": "broadband_top_markets",
+    "category": "ranking",
+    "question": "宽带用户数最多的10个小区或市场是哪些？",
+    "expected_tables": [
+      "edpi_broadband_user_daily"
+    ],
+    "expected_columns": [
+      "market_name"
+    ],
+    "requires_group_by": true,
+    "requires_limit": true
+  },
+  {
+    "id": "mobile_city_count",
+    "category": "aggregate",
+    "question": "广州市 的移网用户数量是多少？",
+    "expected_tables": [
+      "yw_yh_zfb_daily"
+    ],
+    "expected_columns": [
+      "RESIDENT_CITY"
+    ]
+  },
+  {
+    "id": "broadband_city_count",
+    "category": "aggregate",
+    "question": "广州市 的宽带用户数量是多少？",
+    "expected_tables": [
+      "edpi_broadband_user_daily"
+    ],
+    "expected_columns": [
+      "city"
+    ]
+  },
+  {
+    "id": "mixed_city_compare",
+    "category": "mixed",
+    "question": "对比 广州市 的移网用户和宽带用户数量",
+    "expected_tables": [
+      "yw_yh_zfb_daily",
+      "edpi_broadband_user_daily"
+    ],
+    "expected_columns": [
+      "RESIDENT_CITY",
+      "city"
+    ]
+  }
+]

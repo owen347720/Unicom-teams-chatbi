@@ -11,6 +11,7 @@ from typing import Dict, List, Optional
 from loguru import logger
 import os
 import re
+import time
 
 
 class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
@@ -53,6 +54,8 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
         OpenAI_Chat.__init__(self, client=client, config=chat_config)
 
         self.model = model
+        self._last_generation_metrics: Dict = {}
+        self._last_llm_metrics: Dict = {}
         logger.info(f"VannaService initialized with model: {self.model}")
 
     def train_ddl(self, datasource_name: str, ddl: str):
@@ -116,6 +119,9 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
                 'similar_questions': 相似问题列表
             }
         """
+        generation_started_at = time.perf_counter()
+        self._last_generation_metrics = {}
+        self._last_llm_metrics = {}
         try:
             # 使用 Vanna 的 generate_sql 方法生成 SQL
             sql = VannaBase.generate_sql(
@@ -130,11 +136,19 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
             similar = self.get_similar_question_sql(question, n=5)
 
             logger.info(f"SQL generated for {datasource_name}: {sql[:100]}...")
+            metrics = self._build_generation_metrics(
+                started_at=generation_started_at,
+                fallback_used=False,
+                schema_context=schema_context,
+                sql=sql,
+                similar_questions_count=len(similar),
+            )
 
             return {
                 "sql": sql,
                 "confidence": 0.8,  # Vanna 不提供置信度，默认返回
                 "similar_questions": similar,
+                "metrics": metrics,
             }
         except Exception as e:
             logger.warning(
@@ -142,11 +156,68 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
             )
             sql = self._generate_sql_with_llm(question, schema_context)
             sql = self._normalize_clickhouse_sql(sql)
+            metrics = self._build_generation_metrics(
+                started_at=generation_started_at,
+                fallback_used=True,
+                schema_context=schema_context,
+                sql=sql,
+                similar_questions_count=0,
+            )
             return {
                 "sql": sql,
                 "confidence": 0.3,
                 "similar_questions": [],
+                "metrics": metrics,
             }
+
+    def submit_prompt(self, prompt, **kwargs) -> str:
+        if prompt is None:
+            raise Exception("Prompt is None")
+        if len(prompt) == 0:
+            raise Exception("Prompt is empty")
+
+        prompt_tokens_est = self._estimate_message_tokens(prompt)
+        model = (
+            kwargs.get("model")
+            or kwargs.get("engine")
+            or (self.config or {}).get("model")
+            or (self.config or {}).get("engine")
+            or self.model
+        )
+        request_kwargs = {
+            "messages": prompt,
+            "max_tokens": self.max_tokens,
+            "stop": None,
+            "temperature": self.temperature,
+        }
+        if kwargs.get("engine") is not None or (self.config or {}).get("engine"):
+            request_kwargs["engine"] = model
+        else:
+            request_kwargs["model"] = model
+
+        started_at = time.perf_counter()
+        response = self.client.chat.completions.create(**request_kwargs)
+        elapsed = time.perf_counter() - started_at
+
+        content = self._extract_response_content(response)
+        usage = getattr(response, "usage", None)
+        prompt_tokens = getattr(usage, "prompt_tokens", None) if usage else None
+        completion_tokens = (
+            getattr(usage, "completion_tokens", None) if usage else None
+        )
+        total_tokens = getattr(usage, "total_tokens", None) if usage else None
+        completion_tokens_est = self._estimate_text_tokens(content)
+        self._last_llm_metrics = {
+            "model": model,
+            "llm_seconds": round(elapsed, 3),
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": completion_tokens,
+            "total_tokens": total_tokens,
+            "prompt_tokens_est": prompt_tokens_est,
+            "completion_tokens_est": completion_tokens_est,
+            "total_tokens_est": prompt_tokens_est + completion_tokens_est,
+        }
+        return content
 
     def get_sql_prompt(
         self,
@@ -189,31 +260,95 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
         self, question: str, schema_context: Optional[str] = None
     ) -> str:
         context = schema_context or "未提供表结构。"
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "你是 ClickHouse SQL 生成器。必须只使用用户提供的真实表和真实字段。"
+                    "如果表结构不足以回答，也不要编造表名或字段名；优先返回一条可执行的探索性 SQL。"
+                    "如果使用 UNION ALL，每个 SELECT 的列数、顺序和兼容类型必须一致，"
+                    "并且只在整个 UNION ALL 结果末尾使用一个 LIMIT。"
+                    "只输出可执行 SQL，不要解释，不要 markdown 代码块。"
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"表结构和业务口径:\n{context}\n\n"
+                    f"用户问题:\n{question}"
+                ),
+            },
+        ]
+        started_at = time.perf_counter()
         response = self.openai_client.chat.completions.create(
             model=self.model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "你是 ClickHouse SQL 生成器。必须只使用用户提供的真实表和真实字段。"
-                        "如果表结构不足以回答，也不要编造表名或字段名；优先返回一条可执行的探索性 SQL。"
-                        "如果使用 UNION ALL，每个 SELECT 的列数、顺序和兼容类型必须一致，"
-                        "并且只在整个 UNION ALL 结果末尾使用一个 LIMIT。"
-                        "只输出可执行 SQL，不要解释，不要 markdown 代码块。"
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": (
-                        f"表结构和业务口径:\n{context}\n\n"
-                        f"用户问题:\n{question}"
-                    ),
-                },
-            ],
+            messages=messages,
             max_tokens=512,
         )
-        content = response.choices[0].message.content or ""
+        elapsed = time.perf_counter() - started_at
+        content = self._extract_response_content(response)
+        usage = getattr(response, "usage", None)
+        prompt_tokens = getattr(usage, "prompt_tokens", None) if usage else None
+        completion_tokens = (
+            getattr(usage, "completion_tokens", None) if usage else None
+        )
+        total_tokens = getattr(usage, "total_tokens", None) if usage else None
+        prompt_tokens_est = self._estimate_message_tokens(messages)
+        completion_tokens_est = self._estimate_text_tokens(content)
+        self._last_llm_metrics = {
+            "model": self.model,
+            "llm_seconds": round(elapsed, 3),
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": completion_tokens,
+            "total_tokens": total_tokens,
+            "prompt_tokens_est": prompt_tokens_est,
+            "completion_tokens_est": completion_tokens_est,
+            "total_tokens_est": prompt_tokens_est + completion_tokens_est,
+        }
         return self._strip_sql_markdown(content)
+
+    def _build_generation_metrics(
+        self,
+        started_at: float,
+        fallback_used: bool,
+        schema_context: Optional[str],
+        sql: str,
+        similar_questions_count: int,
+    ) -> Dict:
+        metrics = {
+            "generation_seconds": round(time.perf_counter() - started_at, 3),
+            "fallback_used": fallback_used,
+            "schema_context_chars": len(schema_context or ""),
+            "schema_context_tokens_est": self._estimate_text_tokens(
+                schema_context or ""
+            ),
+            "sql_chars": len(sql),
+            "sql_tokens_est": self._estimate_text_tokens(sql),
+            "similar_questions_count": similar_questions_count,
+        }
+        metrics.update(self._last_llm_metrics)
+        self._last_generation_metrics = metrics
+        return metrics
+
+    def _extract_response_content(self, response) -> str:
+        for choice in getattr(response, "choices", []):
+            text = getattr(choice, "text", None)
+            if text:
+                return text
+            message = getattr(choice, "message", None)
+            content = getattr(message, "content", None) if message else None
+            if content:
+                return content
+        return ""
+
+    def _estimate_message_tokens(self, messages: list) -> int:
+        return sum(
+            self._estimate_text_tokens(message.get("content", ""))
+            for message in messages
+        )
+
+    def _estimate_text_tokens(self, text: str) -> int:
+        return max(1, round(len(text) / 4)) if text else 0
 
     def _strip_sql_markdown(self, value: str) -> str:
         value = value.strip()
