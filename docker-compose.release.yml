@@ -1,0 +1,86 @@
+services:
+  frontend:
+    image: text2sql-frontend:${IMAGE_TAG:-latest}
+    container_name: text2sql-frontend
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - backend-api
+    networks:
+      - text2sql-network
+    restart: always
+
+  backend-api:
+    image: text2sql-backend:${IMAGE_TAG:-latest}
+    container_name: text2sql-backend
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    environment:
+      - VANNA_SERVICE_URL=http://vanna-service:8001
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-text2sql}:${POSTGRES_PASSWORD:-text2sql123}@postgres:5432/${POSTGRES_DB:-text2sql}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000}
+      - SQL_TIMEOUT=${SQL_TIMEOUT:-60}
+      - MAX_RESULT_ROWS=${MAX_RESULT_ROWS:-1000}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-default-key-change-in-production}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - backend-logs:/app/logs
+    depends_on:
+      - vanna-service
+      - postgres
+    networks:
+      - text2sql-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  vanna-service:
+    image: text2sql-vanna:${IMAGE_TAG:-latest}
+    container_name: text2sql-vanna
+    ports:
+      - "${VANNA_PORT:-8001}:8001"
+    environment:
+      - MINIMAX_ENDPOINT=${MINIMAX_ENDPOINT:-http://10.242.52.62:9924}
+      - MINIMAX_MODEL=${MINIMAX_MODEL:-MiniMax-M2.7}
+      - MINIMAX_API_KEY=${MINIMAX_API_KEY}
+      - CHROMADB_PATH=/data/chromadb
+    volumes:
+      - chromadb-data:/data/chromadb
+    networks:
+      - text2sql-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  postgres:
+    image: postgres:15
+    container_name: text2sql-postgres
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-text2sql}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-text2sql123}
+      - POSTGRES_DB=${POSTGRES_DB:-text2sql}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - text2sql-network
+    restart: always
+
+volumes:
+  chromadb-data:
+    driver: local
+  postgres-data:
+    driver: local
+  backend-logs:
+    driver: local
+
+networks:
+  text2sql-network:
+    driver: bridge
