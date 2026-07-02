@@ -40,7 +40,7 @@ def upgrade() -> None:
     op.create_table(
         "training_data",
         sa.Column("id", UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
-        sa.Column("datasource_id", UUID(as_uuid=True), sa.ForeignKey("datasources.id"), nullable=False),
+        sa.Column("datasource_id", UUID(as_uuid=True), sa.ForeignKey("datasources.id", ondelete="CASCADE"), nullable=False),
         sa.Column("question", sa.Text, nullable=False),
         sa.Column("sql", sa.Text, nullable=False),
         sa.Column("source", sa.String(20), default="manual"),
@@ -53,7 +53,7 @@ def upgrade() -> None:
     op.create_table(
         "query_history",
         sa.Column("id", UUID(as_uuid=True), primary_key=True, server_default=sa.text("gen_random_uuid()")),
-        sa.Column("datasource_id", UUID(as_uuid=True), sa.ForeignKey("datasources.id"), nullable=False),
+        sa.Column("datasource_id", UUID(as_uuid=True), sa.ForeignKey("datasources.id", ondelete="CASCADE"), nullable=False),
         sa.Column("question", sa.Text, nullable=False),
         sa.Column("generated_sql", sa.Text),
         sa.Column("final_sql", sa.Text),

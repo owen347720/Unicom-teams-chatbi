@@ -13,7 +13,7 @@ class QueryHistory(Base):
     __tablename__ = "query_history"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    datasource_id = Column(UUID(as_uuid=True), ForeignKey("datasources.id"), nullable=False, comment="数据源ID")
+    datasource_id = Column(UUID(as_uuid=True), ForeignKey("datasources.id", ondelete="CASCADE"), nullable=False, comment="数据源ID")
     question = Column(Text, nullable=False, comment="用户问题")
     generated_sql = Column(Text, comment="AI生成的SQL")
     final_sql = Column(Text, comment="最终执行的SQL")
