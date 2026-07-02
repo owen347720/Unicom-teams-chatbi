@@ -171,6 +171,44 @@ body {
   font-weight: 700;
 }
 
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 16px;
+  border: 1px solid #d9e2dd;
+  border-radius: 8px;
+  background: #fbfcfb;
+}
+
+.data-list {
+  display: grid;
+  gap: 10px;
+}
+
+.data-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid #d9e2dd;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.data-row strong,
+.data-row span {
+  display: block;
+}
+
+.data-row span {
+  margin-top: 4px;
+  color: #66756f;
+  font-size: 13px;
+}
+
 @media (max-width: 720px) {
   .app-header {
     align-items: flex-start;
@@ -187,5 +225,14 @@ body {
 
   .ask-grid {
     grid-template-columns: 1fr;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .data-row {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
