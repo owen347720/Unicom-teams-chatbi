@@ -1,0 +1,60 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f4f6f5;
+  color: #1d2522;
+}
+
+.app-shell {
+  min-height: 100vh;
+  background: #f4f6f5;
+}
+
+.app-header {
+  height: auto;
+  min-height: 72px;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #d9e2dd;
+  line-height: 1.2;
+}
+
+.app-title.ant-typography {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 0;
+}
+
+.app-subtitle {
+  color: #5d6b66;
+}
+
+.app-content {
+  padding: 24px;
+}
+
+.workspace-panel {
+  min-height: 280px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #d9e2dd;
+  border-radius: 8px;
+}
+
+@media (max-width: 720px) {
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .app-content {
+    padding: 16px;
+  }
+}
