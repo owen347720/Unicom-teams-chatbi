@@ -109,6 +109,33 @@ CORS_ORIGINS=http://192.168.3.9:38080,http://localhost:38080
 
 Before real model calls, replace `MINIMAX_API_KEY=your_api_key_here` in `.env` with the production key and restart `vanna-service` plus `backend-api`.
 
+Current model endpoint:
+
+```bash
+MINIMAX_ENDPOINT=http://100.65.5.66:9940
+MINIMAX_MODEL=MiniMax-M2.7
+```
+
+The runtime `.env` contains the production API key. Do not copy it into git.
+
+## Current ClickHouse Datasource
+
+- Name: `chatbi-clickhouse`
+- Type: `clickhouse`
+- Host: `100.65.5.66`
+- Port: `9023`
+- Database: `chatbi`
+- User: `chatbi_user`
+
+Port `9023` is the ClickHouse HTTP API, not the native TCP protocol. The backend supports this port through ClickHouse HTTP requests.
+
+Smoke test:
+
+```bash
+cd /data1/text2sql/releases/amd64-verify
+curl -fsS http://127.0.0.1:38000/api/v1/datasources/list
+```
+
 ## Deployment Notes
 
 - Docker root on the server is `/data1/docker`.
@@ -116,3 +143,4 @@ Before real model calls, replace `MINIMAX_API_KEY=your_api_key_here` in `.env` w
 - The release build script now saves `postgres:15-alpine` into future offline image archives.
 - The Vanna image requires `openai==1.58.1`; this is now pinned in `vanna-service/requirements.txt`.
 - The frontend container healthcheck uses `127.0.0.1:3000/health`; `localhost` fails inside the Alpine container on this server.
+- The server cannot resolve `chroma-onnx-models.s3.amazonaws.com`, so Vanna has a direct MiniMax fallback when Chroma embedding initialization fails. This keeps SQL generation available even without the Chroma ONNX embedding model.

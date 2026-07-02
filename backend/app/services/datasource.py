@@ -271,6 +271,31 @@ class DatasourceService:
             }
 
         elif db_type == "clickhouse":
+            if self._is_clickhouse_http_port(port):
+                start = _time.time()
+                payload = self._clickhouse_http_query_json(
+                    host=host,
+                    port=port,
+                    username=username,
+                    password=password,
+                    database=database,
+                    sql=sql,
+                    timeout=timeout,
+                )
+                elapsed = _time.time() - start
+                columns = [meta["name"] for meta in payload.get("meta", [])]
+                rows = [
+                    [row.get(column) for column in columns]
+                    for row in payload.get("data", [])[:max_rows]
+                ]
+                return {
+                    "columns": columns,
+                    "rows": rows,
+                    "row_count": len(rows),
+                    "execution_time": round(elapsed, 3),
+                    "truncated": len(payload.get("data", [])) > max_rows,
+                }
+
             import clickhouse_driver
 
             client = clickhouse_driver.Client(
@@ -342,6 +367,18 @@ class DatasourceService:
             return count
 
         elif db_type == "clickhouse":
+            if self._is_clickhouse_http_port(port):
+                result = self._clickhouse_http_query_text(
+                    host=host,
+                    port=port,
+                    username=username,
+                    password=password,
+                    database=database,
+                    sql="SELECT COUNT(*) FROM system.tables WHERE database = currentDatabase()",
+                    timeout=10,
+                )
+                return int(result.strip())
+
             import clickhouse_driver
 
             client = clickhouse_driver.Client(
@@ -355,6 +392,56 @@ class DatasourceService:
 
         else:
             raise ValueError(f"Unsupported database type: {db_type}")
+
+    def _is_clickhouse_http_port(self, port: int) -> bool:
+        return port in {8123, 8443, 9023}
+
+    def _clickhouse_http_query_text(
+        self,
+        host: str,
+        port: int,
+        username: str,
+        password: str,
+        database: str,
+        sql: str,
+        timeout: int,
+    ) -> str:
+        url = f"http://{host}:{port}/"
+        with httpx.Client(timeout=timeout) as client:
+            response = client.post(
+                url,
+                params={"database": database},
+                content=sql.encode("utf-8"),
+                auth=(username, password),
+            )
+            response.raise_for_status()
+            return response.text
+
+    def _clickhouse_http_query_json(
+        self,
+        host: str,
+        port: int,
+        username: str,
+        password: str,
+        database: str,
+        sql: str,
+        timeout: int,
+    ) -> dict:
+        query = sql.rstrip().rstrip(";")
+        if " format " not in f" {query.lower()} ":
+            query = f"{query} FORMAT JSON"
+        text = self._clickhouse_http_query_text(
+            host=host,
+            port=port,
+            username=username,
+            password=password,
+            database=database,
+            sql=query,
+            timeout=timeout,
+        )
+        import json
+
+        return json.loads(text)
 
     def _extract_tables(
         self,

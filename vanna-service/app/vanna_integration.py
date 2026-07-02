@@ -10,6 +10,7 @@ from vanna.chromadb import ChromaDB_VectorStore
 from typing import Dict, List
 from loguru import logger
 import os
+import re
 
 
 class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
@@ -35,6 +36,7 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
             api_key=api_key,
             base_url=api_base,
         )
+        self.openai_client = client
 
         # ChromaDB 配置（不含 api_base）
         vector_config = {
@@ -132,8 +134,42 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
                 "similar_questions": similar,
             }
         except Exception as e:
-            logger.error(f"SQL generation failed: {e}")
-            raise
+            logger.warning(
+                f"Vanna SQL generation failed, falling back to direct LLM: {e}"
+            )
+            sql = self._generate_sql_with_llm(question)
+            return {
+                "sql": sql,
+                "confidence": 0.3,
+                "similar_questions": [],
+            }
+
+    def _generate_sql_with_llm(self, question: str) -> str:
+        response = self.openai_client.chat.completions.create(
+            model=self.model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You generate ClickHouse SQL. Return only executable SQL, "
+                        "without explanation or markdown fences."
+                    ),
+                },
+                {"role": "user", "content": question},
+            ],
+            max_tokens=512,
+        )
+        content = response.choices[0].message.content or ""
+        return self._strip_sql_markdown(content)
+
+    def _strip_sql_markdown(self, value: str) -> str:
+        value = value.strip()
+        match = re.search(
+            r"```(?:sql)?\s*(.*?)```", value, flags=re.IGNORECASE | re.DOTALL
+        )
+        if match:
+            value = match.group(1).strip()
+        return value.rstrip(";") + ";"
 
     def get_similar_training_data(
         self,

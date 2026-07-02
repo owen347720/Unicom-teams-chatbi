@@ -60,7 +60,7 @@ def generate_sql(body: GenerateSQLRequest, db: Session = Depends(get_db)):
                 f"{settings.vanna_service_url}/generate",
                 json={
                     "question": body.question,
-                    "datasource_id": str(body.datasource_id),
+                    "datasource_name": ds.name,
                 },
             )
             resp.raise_for_status()
@@ -74,15 +74,18 @@ def generate_sql(body: GenerateSQLRequest, db: Session = Depends(get_db)):
     history = QueryHistory(
         datasource_id=body.datasource_id,
         question=body.question,
-        generated_sql=result.get("sql", ""),
+        generated_sql=result.get("data", {}).get("sql", result.get("sql", "")),
     )
     db.add(history)
     db.commit()
 
+    data = result.get("data", result)
     return {
-        "sql": result.get("sql", ""),
-        "confidence": result.get("confidence", 0),
-        "related_training_data": result.get("related_training_data", []),
+        "sql": data.get("sql", ""),
+        "confidence": data.get("confidence", 0),
+        "related_training_data": data.get(
+            "related_training_data", data.get("similar_questions", [])
+        ),
     }
 
 
