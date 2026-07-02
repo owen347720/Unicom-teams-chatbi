@@ -96,5 +96,39 @@ Review: Approved
 
 ---
 
+## 恢复后进度校准（2026-07-02）
+
+实际 git 历史显示 Task 6-15 已由上一轮工作完成：
+
+- ✅ Task 6: DDL 提取器
+- ✅ Task 7: ChromaDB 备份/恢复脚本
+- ✅ Task 8: Backend 基础配置
+- ✅ Task 9: SQLAlchemy 数据模型
+- ✅ Task 10: 密码加密服务
+- ✅ Task 11: 数据源管理服务
+- ✅ Task 12: API 路由
+- ✅ Task 13: FastAPI 主应用
+- ✅ Task 14: Alembic 迁移
+- ✅ Task 15: Docker entrypoint 自动迁移
+
+新增交付目标：
+
+- 最终系统必须可打包成 Docker 镜像交付给其他组，在 A100 服务器上通过 `docker compose -f docker-compose.release.yml up -d` 一键启动。
+- 目标服务器不应依赖源码构建环境；常规交付使用镜像 tar 包、release compose 和 `.env`。
+
+## Phase 4/5 执行进度（feature/frontend-release-delivery）
+
+- ✅ Task 16: React/Vite 前端脚手架
+- ✅ Task 17: 前端 API client 和类型
+- ✅ Task 18: 应用壳和页面导航
+- ✅ Task 19: 问数界面
+- ✅ Task 20: 数据源管理
+- ✅ Task 21: 训练数据管理
+- ✅ Task 22: 设置页
+- ✅ Task 23: 前端生产容器
+- ✅ Task 24: Release compose 和镜像打包脚本
+- ✅ Task 25: A100 部署文档
+
 ## 下一步
-Task 6-7: DDL提取器 + ChromaDB备份脚本（Phase 2最后2个任务）
+
+Task 26: Full Verification（后端/Vanna/前端测试、compose 校验、release 镜像构建验证）。

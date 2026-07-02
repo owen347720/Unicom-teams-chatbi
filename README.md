@@ -16,10 +16,26 @@ docker-compose up -d
 浏览器打开: http://localhost:3000
 ```
 
+## 交付部署
+
+项目支持打包为离线镜像包，提供给其他组在 A100 服务器上部署：
+
+```bash
+IMAGE_TAG=2026-07-02 ./scripts/build_release.sh
+```
+
+目标服务器加载镜像后执行：
+
+```bash
+docker compose -f docker-compose.release.yml --env-file .env up -d
+```
+
+详细步骤见 `doc/DEPLOY_A100.md`。
+
 ## 详细文档
 
 见 `doc/` 目录。
 
 ## 更新日期
 
-2026-06-30
+2026-07-02
