@@ -6,6 +6,7 @@ This guide describes how to package Text2SQL on a build machine and deploy it on
 
 - Docker Engine
 - Docker Compose plugin (`docker compose version`)
+- x86_64/amd64 Linux server architecture
 - Ports available by default: `3000`, `8000`, `8001`, `5432`
 - Network access from the A100 server to the MiniMax endpoint, default `http://10.242.52.62:9924`
 
@@ -17,8 +18,10 @@ Run on the source/build machine:
 
 ```bash
 cp .env.example .env
-IMAGE_TAG=2026-07-02 ./scripts/build_release.sh
+IMAGE_TAG=2026-07-02 TARGET_PLATFORM=linux/amd64 ./scripts/build_release.sh
 ```
+
+`TARGET_PLATFORM` defaults to `linux/amd64`, which matches the target x86 A100 server. On Apple Silicon build machines this uses Docker Buildx and produces amd64 images that can be loaded on the A100 server.
 
 The script creates `release/` with:
 
@@ -44,6 +47,7 @@ Edit `.env`:
 
 ```bash
 IMAGE_TAG=2026-07-02
+TARGET_PLATFORM=linux/amd64
 MINIMAX_API_KEY=<real_key>
 MINIMAX_ENDPOINT=http://10.242.52.62:9924
 MINIMAX_MODEL=MiniMax-M2.7

@@ -21,7 +21,7 @@ docker-compose up -d
 项目支持打包为离线镜像包，提供给其他组在 A100 服务器上部署：
 
 ```bash
-IMAGE_TAG=2026-07-02 ./scripts/build_release.sh
+IMAGE_TAG=2026-07-02 TARGET_PLATFORM=linux/amd64 ./scripts/build_release.sh
 ```
 
 目标服务器加载镜像后执行：
