@@ -31,3 +31,6 @@ Thumbs.db
 # Docker volumes (local)
 chromadb-data/
 postgres-data/
+
+# Local worktrees
+.worktrees/
