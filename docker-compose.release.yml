@@ -59,7 +59,7 @@ services:
       retries: 3
 
   postgres:
-    image: postgres:15
+    image: postgres:15-alpine
     container_name: text2sql-postgres
     ports:
       - "${POSTGRES_PORT:-5432}:5432"

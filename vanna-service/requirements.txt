@@ -19,6 +19,7 @@ mysql-connector-python==8.2.0
 # HTTP client
 requests==2.31.0
 httpx==0.25.2
+openai==1.58.1
 
 # Logging
 loguru==0.7.2

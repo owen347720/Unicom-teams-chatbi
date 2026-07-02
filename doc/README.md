@@ -53,6 +53,7 @@ docker-compose up -d
 - [API 设计](API.md) - 后端 API 端点设计
 - [Vanna 集成](VANNA_INTEGRATION.md) - Vanna 服务设计
 - [部署流程](SETUP.md) - 详细部署和使用说明
+- [A100 远程运维](A100_REMOTE_OPS.md) - A100BMS-2 部署目录、端口、健康检查和常用运维命令
 - [安全注意事项](SECURITY.md) - 安全配置和风险提示
 
 ## 详细设计文档
@@ -61,8 +62,8 @@ docker-compose up -d
 
 ## 当前状态
 
-项目处于设计阶段，准备开始实现。
+项目已完成容器化前后端与 A100BMS-2 服务器部署验证。
 
 ## 更新日期
 
-2026-06-30
+2026-07-02

@@ -14,11 +14,13 @@ docker buildx version >/dev/null
 docker buildx build --load --platform "$TARGET_PLATFORM" -t "text2sql-frontend:$TAG" "$ROOT_DIR/frontend"
 docker buildx build --load --platform "$TARGET_PLATFORM" -t "text2sql-backend:$TAG" "$ROOT_DIR/backend"
 docker buildx build --load --platform "$TARGET_PLATFORM" -t "text2sql-vanna:$TAG" "$ROOT_DIR/vanna-service"
+docker pull --platform "$TARGET_PLATFORM" postgres:15-alpine
 
 docker save \
   "text2sql-frontend:$TAG" \
   "text2sql-backend:$TAG" \
   "text2sql-vanna:$TAG" \
+  "postgres:15-alpine" \
   -o "$ARCHIVE"
 
 cp "$ROOT_DIR/docker-compose.release.yml" "$RELEASE_DIR/"
