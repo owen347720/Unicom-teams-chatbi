@@ -209,6 +209,21 @@ body {
   font-size: 13px;
 }
 
+.form-span {
+  grid-column: 1 / -1;
+}
+
+.split-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.split-panel h3.ant-typography {
+  margin-top: 0;
+  font-size: 16px;
+}
+
 @media (max-width: 720px) {
   .app-header {
     align-items: flex-start;
@@ -234,5 +249,9 @@ body {
   .data-row {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .split-panel {
+    grid-template-columns: 1fr;
   }
 }
