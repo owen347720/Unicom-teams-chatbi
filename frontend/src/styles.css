@@ -48,6 +48,37 @@ body {
   border-radius: 8px;
 }
 
+.page-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.page-heading .ant-typography {
+  margin-top: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.wide-control {
+  width: min(420px, 100%);
+}
+
+.empty-state {
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #66756f;
+  border: 1px dashed #b8c7c0;
+  border-radius: 8px;
+  background: #f8faf9;
+}
+
 @media (max-width: 720px) {
   .app-header {
     align-items: flex-start;
@@ -56,5 +87,9 @@ body {
 
   .app-content {
     padding: 16px;
+  }
+
+  .page-heading {
+    flex-direction: column;
   }
 }
