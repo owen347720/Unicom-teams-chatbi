@@ -58,6 +58,7 @@ class GenerateSQLRequest(BaseModel):
     """SQL 生成请求"""
     datasource_name: str
     question: str
+    schema_context: Optional[str] = None
 
 
 # ============ Response Models ============
@@ -184,7 +185,8 @@ async def generate_sql(request: GenerateSQLRequest):
     try:
         result = vanna_service.generate_sql(
             datasource_name=request.datasource_name,
-            question=request.question
+            question=request.question,
+            schema_context=request.schema_context,
         )
         logger.info(f"SQL generated for {request.datasource_name}: {request.question}")
         return GenerateSQLResponse(

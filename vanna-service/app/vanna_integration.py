@@ -7,7 +7,7 @@ from openai import OpenAI
 from vanna.base import VannaBase
 from vanna.openai import OpenAI_Chat
 from vanna.chromadb import ChromaDB_VectorStore
-from typing import Dict, List
+from typing import Dict, List, Optional
 from loguru import logger
 import os
 import re
@@ -100,6 +100,7 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
         self,
         datasource_name: str,
         question: str,
+        schema_context: Optional[str] = None,
     ) -> Dict:
         """
         根据问题生成 SQL
@@ -121,7 +122,9 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
                 self,
                 question=question,
                 metadata={"datasource": datasource_name},
+                schema_context=schema_context,
             )
+            sql = self._normalize_clickhouse_sql(sql)
 
             # 获取相似问题
             similar = self.get_similar_question_sql(question, n=5)
@@ -137,25 +140,75 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
             logger.warning(
                 f"Vanna SQL generation failed, falling back to direct LLM: {e}"
             )
-            sql = self._generate_sql_with_llm(question)
+            sql = self._generate_sql_with_llm(question, schema_context)
+            sql = self._normalize_clickhouse_sql(sql)
             return {
                 "sql": sql,
                 "confidence": 0.3,
                 "similar_questions": [],
             }
 
-    def _generate_sql_with_llm(self, question: str) -> str:
+    def get_sql_prompt(
+        self,
+        initial_prompt: str,
+        question: str,
+        question_sql_list: list,
+        ddl_list: list,
+        doc_list: list,
+        **kwargs,
+    ):
+        schema_context = kwargs.pop("schema_context", None)
+        if schema_context:
+            doc_list = [
+                (
+                    "实时数据库表结构和业务口径如下。必须只使用这些真实表和真实字段；"
+                    "不要编造表名或字段名。明细类问题默认添加 LIMIT 100。"
+                    "如果使用 UNION ALL，每个 SELECT 的列数、顺序和兼容类型必须一致，"
+                    "并且只在整个 UNION ALL 结果末尾使用一个 LIMIT，或把每个分支包成子查询。\n"
+                    f"{schema_context}"
+                ),
+                *doc_list,
+            ]
+
+        if initial_prompt is None:
+            initial_prompt = (
+                "You are a ClickHouse SQL expert. Generate executable SQL only. "
+                "Do not explain. Do not use markdown fences. "
+            )
+
+        return super().get_sql_prompt(
+            initial_prompt=initial_prompt,
+            question=question,
+            question_sql_list=question_sql_list,
+            ddl_list=ddl_list,
+            doc_list=doc_list,
+            **kwargs,
+        )
+
+    def _generate_sql_with_llm(
+        self, question: str, schema_context: Optional[str] = None
+    ) -> str:
+        context = schema_context or "未提供表结构。"
         response = self.openai_client.chat.completions.create(
             model=self.model,
             messages=[
                 {
                     "role": "system",
                     "content": (
-                        "You generate ClickHouse SQL. Return only executable SQL, "
-                        "without explanation or markdown fences."
+                        "你是 ClickHouse SQL 生成器。必须只使用用户提供的真实表和真实字段。"
+                        "如果表结构不足以回答，也不要编造表名或字段名；优先返回一条可执行的探索性 SQL。"
+                        "如果使用 UNION ALL，每个 SELECT 的列数、顺序和兼容类型必须一致，"
+                        "并且只在整个 UNION ALL 结果末尾使用一个 LIMIT。"
+                        "只输出可执行 SQL，不要解释，不要 markdown 代码块。"
                     ),
                 },
-                {"role": "user", "content": question},
+                {
+                    "role": "user",
+                    "content": (
+                        f"表结构和业务口径:\n{context}\n\n"
+                        f"用户问题:\n{question}"
+                    ),
+                },
             ],
             max_tokens=512,
         )
@@ -170,6 +223,27 @@ class VannaService(ChromaDB_VectorStore, OpenAI_Chat):
         if match:
             value = match.group(1).strip()
         return value.rstrip(";") + ";"
+
+    def _normalize_clickhouse_sql(self, value: str) -> str:
+        sql = self._strip_sql_markdown(value)
+        if not re.search(r"\bUNION\s+ALL\b", sql, flags=re.IGNORECASE):
+            return sql
+
+        limits = [
+            int(match.group(1))
+            for match in re.finditer(r"\bLIMIT\s+(\d+)\b", sql, flags=re.IGNORECASE)
+        ]
+        if len(limits) <= 1:
+            return sql
+
+        sql_without_limits = re.sub(
+            r"\s+\bLIMIT\s+\d+\b\s*;?",
+            " ",
+            sql,
+            flags=re.IGNORECASE,
+        ).strip()
+        limit = min(limits)
+        return f"{sql_without_limits.rstrip(';')}\nLIMIT {limit};"
 
     def get_similar_training_data(
         self,

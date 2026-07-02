@@ -12,12 +12,12 @@ This note records the live A100BMS-2 deployment for remote development and opera
 
 ## Ports
 
-- Frontend: `http://192.168.3.9:38080`
+- Frontend: `http://192.168.3.9`
 - Backend API: `http://192.168.3.9:38000`
 - Vanna service: `http://192.168.3.9:38001`
 - PostgreSQL host port: `35432`
 
-These ports were selected to avoid existing services on `3000`, `8000`, `5432`, `9911`, `9912`, `18000`, `18001`, `30070`, and `9083`.
+The frontend is intentionally published on port `80`. API and internal service ports use the `38xxx` range to avoid existing services on `3000`, `8000`, `5432`, `9911`, `9912`, `18000`, `18001`, `30070`, and `9083`.
 
 ## Current Runtime
 
@@ -39,7 +39,7 @@ Expected containers:
 ## Health Checks
 
 ```bash
-curl -fsS http://127.0.0.1:38080/health
+curl -fsS http://127.0.0.1/health
 curl -fsS http://127.0.0.1:38000/health
 curl -fsS http://127.0.0.1:38001/health
 ```
@@ -100,11 +100,11 @@ Important values:
 ```bash
 IMAGE_TAG=amd64-verify
 TARGET_PLATFORM=linux/amd64
-FRONTEND_PORT=38080
+FRONTEND_PORT=80
 BACKEND_PORT=38000
 VANNA_PORT=38001
 POSTGRES_PORT=35432
-CORS_ORIGINS=http://192.168.3.9:38080,http://localhost:38080
+CORS_ORIGINS=http://192.168.3.9,http://localhost
 ```
 
 Before real model calls, replace `MINIMAX_API_KEY=your_api_key_here` in `.env` with the production key and restart `vanna-service` plus `backend-api`.
@@ -142,5 +142,7 @@ curl -fsS http://127.0.0.1:38000/api/v1/datasources/list
 - The active compose file uses `postgres:15-alpine` because that image already exists on the server and avoids external image pulls.
 - The release build script now saves `postgres:15-alpine` into future offline image archives.
 - The Vanna image requires `openai==1.58.1`; this is now pinned in `vanna-service/requirements.txt`.
+- The Vanna image bakes Chroma's default `all-MiniLM-L6-v2` ONNX embedding model into `/root/.cache/chroma/onnx_models/all-MiniLM-L6-v2`. A100 cannot resolve `chroma-onnx-models.s3.amazonaws.com`, so runtime downloads must not be required.
+- SQL generation now injects live ClickHouse schema context from the selected datasource into Vanna, so prompts such as `汇景新城有哪些移网用户和宽带用户` can use real tables like `yw_yh_zfb_daily` and `edpi_broadband_user_daily` instead of hallucinated tables.
+- Generated ClickHouse SQL is normalized so `UNION ALL` queries keep a single final `LIMIT`, avoiding invalid branch-level `LIMIT` output.
 - The frontend container healthcheck uses `127.0.0.1:3000/health`; `localhost` fails inside the Alpine container on this server.
-- The server cannot resolve `chroma-onnx-models.s3.amazonaws.com`, so Vanna has a direct MiniMax fallback when Chroma embedding initialization fails. This keeps SQL generation available even without the Chroma ONNX embedding model.

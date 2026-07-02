@@ -151,7 +151,35 @@ class TestGenerateSQL:
                     assert "sql" in result
                     assert "confidence" in result
                     assert "similar_questions" in result
-                    assert result["sql"] == "SELECT 1"
+                    assert result["sql"] == "SELECT 1;"
+
+    def test_normalize_union_all_limits(self):
+        """测试 ClickHouse UNION ALL 只保留最终 LIMIT"""
+        from app.vanna_integration import VannaService
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            with patch.dict(
+                os.environ,
+                {
+                    "MINIMAX_API_KEY": "test-key",
+                    "MINIMAX_ENDPOINT": "http://10.242.52.62:9924",
+                    "MINIMAX_MODEL": "MiniMax-M2.7",
+                    "CHROMADB_PATH": tmpdir,
+                },
+            ):
+                service = VannaService()
+                sql = service._normalize_clickhouse_sql(
+                    """
+                    SELECT id FROM mobile LIMIT 100
+                    UNION ALL
+                    SELECT id FROM broadband LIMIT 100
+                    """
+                )
+
+                assert "mobile LIMIT 100" not in sql
+                assert "broadband LIMIT 100" not in sql
+                assert sql.count("LIMIT 100") == 1
+                assert sql.endswith("LIMIT 100;")
 
 
 class TestGetSimilarTrainingData:

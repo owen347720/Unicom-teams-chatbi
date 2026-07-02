@@ -5,7 +5,7 @@
 
 - SSH: `A100BMS-2`
 - 服务器目录: `/data1/text2sql/releases/amd64-verify`
-- 前端: `http://192.168.3.9:38080`
+- 前端: `http://192.168.3.9`
 - 后端 API: `http://192.168.3.9:38000`
 - Vanna: `http://192.168.3.9:38001`
 - PostgreSQL 端口: `35432`
@@ -18,4 +18,6 @@ cd /data1/text2sql/releases/amd64-verify
 docker compose --env-file .env -f docker-compose.yml ps
 ```
 
-运维详情见 `doc/A100_REMOTE_OPS.md`。真实模型调用前需要把服务器 `.env` 中的 `MINIMAX_API_KEY=your_api_key_here` 替换为生产 key，并重启 `vanna-service` 和 `backend-api`。
+运维详情见 `doc/A100_REMOTE_OPS.md`。服务器 `.env` 已配置生产模型和 ClickHouse 数据源凭据；不要把真实 key 或密码写入 git。
+
+当前 Vanna 链路要求镜像内置 Chroma 默认 ONNX embedding 模型。`vanna-service/Dockerfile` 会在构建阶段下载并校验 `all-MiniLM-L6-v2`，因此 A100 运行时不依赖 `chroma-onnx-models.s3.amazonaws.com`。

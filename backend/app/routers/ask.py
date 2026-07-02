@@ -55,12 +55,15 @@ def generate_sql(body: GenerateSQLRequest, db: Session = Depends(get_db)):
 
     # 调用 Vanna Service
     try:
+        service = DatasourceService(db)
+        schema_context = service.build_schema_context(ds, body.question)
         with httpx.Client(timeout=settings.sql_timeout) as client:
             resp = client.post(
                 f"{settings.vanna_service_url}/generate",
                 json={
                     "question": body.question,
                     "datasource_name": ds.name,
+                    "schema_context": schema_context,
                 },
             )
             resp.raise_for_status()

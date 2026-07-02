@@ -18,6 +18,14 @@ logger = logging.getLogger(__name__)
 SUPPORTED_TYPES = ("clickhouse", "postgresql", "mysql")
 
 
+def _question_terms(question: str) -> list[str]:
+    separators = " ，。；;,.!?！？()（）[]【】/\\|:-_"
+    normalized = question.lower()
+    for separator in separators:
+        normalized = normalized.replace(separator, " ")
+    return [term for term in normalized.split() if term]
+
+
 class DatasourceService:
     """数据源管理服务"""
 
@@ -205,6 +213,26 @@ class DatasourceService:
             datasource.database,
             table_name,
         )
+
+    def build_schema_context(self, datasource: Datasource, question: str) -> str:
+        """Build a compact live schema prompt for SQL generation."""
+        if datasource.type != "clickhouse":
+            return ""
+
+        plaintext_password = decrypt(datasource.password)
+        try:
+            if self._is_clickhouse_http_port(datasource.port):
+                return self._build_clickhouse_http_schema_context(
+                    host=datasource.host,
+                    port=datasource.port,
+                    username=datasource.username,
+                    password=plaintext_password,
+                    database=datasource.database,
+                    question=question,
+                )
+        except Exception as e:
+            logger.warning(f"Failed to build schema context: {e}")
+        return ""
 
     def _execute_sql_direct(
         self,
@@ -442,6 +470,116 @@ class DatasourceService:
         import json
 
         return json.loads(text)
+
+    def _build_clickhouse_http_schema_context(
+        self,
+        host: str,
+        port: int,
+        username: str,
+        password: str,
+        database: str,
+        question: str,
+    ) -> str:
+        payload = self._clickhouse_http_query_json(
+            host=host,
+            port=port,
+            username=username,
+            password=password,
+            database=database,
+            sql=(
+                "SELECT table, name, type "
+                "FROM system.columns "
+                "WHERE database = currentDatabase() "
+                "ORDER BY table, position"
+            ),
+            timeout=15,
+        )
+
+        table_columns: dict[str, list[tuple[str, str]]] = {}
+        for row in payload.get("data", []):
+            table = row.get("table")
+            name = row.get("name")
+            type_name = row.get("type")
+            if table and name and type_name:
+                table_columns.setdefault(table, []).append((name, type_name))
+
+        table_hints = {
+            "yw_yh_zfb_daily": (
+                "移网/移动用户明细表；小区字段 RESIDENT_AREA；用户号码 SERIAL_NUMBER；"
+                "用户类型 USER_TYPE_CODE；宽带运营商 BROADBAND_OPERATOR。"
+            ),
+            "edpi_broadband_user_daily": (
+                "宽带用户明细表；宽带账号 pppoe_account；装机地址 b_install_address；"
+                "用户号码 b_serial_number；联系电话 b_contact_number；小区/市场 market_name。"
+            ),
+            "edpi_broadband_user_backup_20260428": (
+                "宽带用户备份表；字段基本同 edpi_broadband_user_daily。"
+            ),
+            "ods_df_4g_zero_flow": "4G 小区零流量表；小区名 sec_name。",
+            "ods_df_5g_zero_flow": "5G 小区零流量表；小区名 sec_name。",
+            "ods_df_wls_secconfig": "无线小区配置表；小区名 sec_name；归属区域 region_name。",
+        }
+
+        selected_tables = self._rank_tables_for_question(
+            table_columns=table_columns,
+            table_hints=table_hints,
+            question=question,
+        )[:8]
+
+        lines = [
+            "数据库类型: ClickHouse",
+            f"数据库名: {database}",
+            "只允许使用下面列出的真实表和真实字段；禁止编造 用户表、客户表、小区名称、业务类型 等不存在的表或字段。",
+            "业务口径:",
+            "- 问“移网用户/移动用户”优先使用 yw_yh_zfb_daily。",
+            "- 问“宽带用户”优先使用 edpi_broadband_user_daily。",
+            "- 问某小区名称时，移网表用 RESIDENT_AREA LIKE '%小区名%'，宽带表用 b_install_address 或 market_name LIKE '%小区名%'。",
+            "可用表结构:",
+        ]
+        for table in selected_tables:
+            columns = table_columns.get(table, [])
+            hint = table_hints.get(table)
+            lines.append(f"- {table}" + (f": {hint}" if hint else ""))
+            for name, type_name in columns[:80]:
+                lines.append(f"  - {name} {type_name}")
+            if len(columns) > 80:
+                lines.append(f"  - ... 其余 {len(columns) - 80} 个字段省略")
+        return "\n".join(lines)
+
+    def _rank_tables_for_question(
+        self,
+        table_columns: dict[str, list[tuple[str, str]]],
+        table_hints: dict[str, str],
+        question: str,
+    ) -> list[str]:
+        question_lower = question.lower()
+        scores: dict[str, int] = {}
+        for table, columns in table_columns.items():
+            haystack = " ".join(
+                [table, table_hints.get(table, "")]
+                + [name for name, _ in columns[:120]]
+            ).lower()
+            score = 0
+            for term in _question_terms(question_lower):
+                if term in haystack:
+                    score += 2
+            if table in table_hints:
+                score += 1
+            scores[table] = score
+
+        if any(word in question for word in ("移网", "移动", "手机", "号码")):
+            scores["yw_yh_zfb_daily"] = scores.get("yw_yh_zfb_daily", 0) + 20
+        if "宽带" in question:
+            scores["edpi_broadband_user_daily"] = (
+                scores.get("edpi_broadband_user_daily", 0) + 20
+            )
+        if any(word in question for word in ("小区", "汇景", "新城", "地址")):
+            for table in ("yw_yh_zfb_daily", "edpi_broadband_user_daily"):
+                scores[table] = scores.get(table, 0) + 8
+
+        return sorted(
+            table_columns, key=lambda table: scores.get(table, 0), reverse=True
+        )
 
     def _extract_tables(
         self,

@@ -145,7 +145,8 @@ class TestGenerateSQL:
         # 验证 service 方法被调用
         mock_vanna_service.generate_sql.assert_called_once_with(
             datasource_name="test_datasource",
-            question="查询所有用户"
+            question="查询所有用户",
+            schema_context=None,
         )
 
     def test_generate_missing_fields(self, client):
