@@ -11,6 +11,8 @@
 ### 1.1 项目目标
 构建一个团队内取数项目，实现自然语言问数功能，所有服务容器化部署，支持数据源插拔，特别支持 ClickHouse 数据库。
 
+最终交付物需要支持提供给其他组在他们的 A100 服务器上部署。目标服务器常规启动路径应只依赖 Docker 和 Docker Compose：加载已打包镜像、配置 `.env`、执行 `docker compose -f docker-compose.release.yml up -d` 即可启动完整系统。
+
 ### 1.2 核心特性
 - 自然语言转 SQL 查询（基于 Vanna + MiniMax-M2.7）
 - 前后端分离架构（React + FastAPI）
@@ -72,6 +74,8 @@
 - Docker + docker-compose
 - 完全容器化部署
 - Volume 持久化数据
+- 支持离线/半离线镜像包交付到 A100 服务器
+- Release compose 使用固定镜像 tag，不要求目标服务器具备源码构建环境
 
 ---
 
