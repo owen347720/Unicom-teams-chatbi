@@ -22,7 +22,7 @@
   },
   "expected_result_status_counts": {
     "not_sql_task": 300,
-    "pending_execution": 700
+    "ok": 700
   },
-  "generated_at": "2026-07-03T02:02:12.303622+00:00"
+  "generated_at": "2026-07-03T02:17:21.454936+00:00"
 }
