@@ -92,7 +92,7 @@ def discover_seed_values(client: BenchmarkClient) -> dict[str, list[dict[str, An
             WHERE length(RESIDENT_AREA) > 0
             GROUP BY RESIDENT_AREA
             ORDER BY cnt DESC
-            LIMIT 8
+            LIMIT 20
         """,
         "broadband_markets": """
             SELECT market_name AS value, count() AS cnt
@@ -100,7 +100,7 @@ def discover_seed_values(client: BenchmarkClient) -> dict[str, list[dict[str, An
             WHERE length(market_name) > 0
             GROUP BY market_name
             ORDER BY cnt DESC
-            LIMIT 8
+            LIMIT 20
         """,
         "mobile_cities": """
             SELECT RESIDENT_CITY AS value, count() AS cnt
@@ -108,7 +108,7 @@ def discover_seed_values(client: BenchmarkClient) -> dict[str, list[dict[str, An
             WHERE length(RESIDENT_CITY) > 0
             GROUP BY RESIDENT_CITY
             ORDER BY cnt DESC
-            LIMIT 5
+            LIMIT 10
         """,
         "broadband_cities": """
             SELECT city AS value, count() AS cnt
@@ -116,7 +116,7 @@ def discover_seed_values(client: BenchmarkClient) -> dict[str, list[dict[str, An
             WHERE length(city) > 0
             GROUP BY city
             ORDER BY cnt DESC
-            LIMIT 5
+            LIMIT 10
         """,
     }
     return {name: scalar_rows(client.execute_sql(sql)) for name, sql in queries.items()}
@@ -129,94 +129,239 @@ def first_value(seed: dict[str, list[dict[str, Any]]], key: str, index: int = 0)
     return str(values[min(index, len(values) - 1)]["value"])
 
 
-def build_cases(seed: dict[str, list[dict[str, Any]]]) -> list[dict[str, Any]]:
-    mobile_a = first_value(seed, "mobile_communities", 0)
-    mobile_b = first_value(seed, "mobile_communities", 1)
-    broadband_a = first_value(seed, "broadband_markets", 0)
-    broadband_b = first_value(seed, "broadband_markets", 1)
-    mobile_city = first_value(seed, "mobile_cities", 0)
-    broadband_city = first_value(seed, "broadband_cities", 0)
-    shared = "汇景新城"
+def seed_values(seed: dict[str, list[dict[str, Any]]], key: str) -> list[str]:
+    values = [str(item["value"]) for item in seed.get(key, []) if item.get("value")]
+    if not values:
+        raise RuntimeError(f"No seed values for {key}")
+    return values
 
-    return [
-        {
-            "id": "mobile_count_by_community",
-            "category": "aggregate",
-            "question": f"{mobile_a} 有多少移网用户？",
-            "expected_tables": ["yw_yh_zfb_daily"],
-            "expected_columns": ["RESIDENT_AREA"],
-        },
-        {
-            "id": "mobile_list_by_community",
-            "category": "detail",
-            "question": f"列出 {mobile_b} 的移网用户号码，最多100条",
-            "expected_tables": ["yw_yh_zfb_daily"],
-            "expected_columns": ["SERIAL_NUMBER", "RESIDENT_AREA"],
-            "requires_limit": True,
-        },
-        {
-            "id": "broadband_count_by_market",
-            "category": "aggregate",
-            "question": f"{broadband_a} 有多少宽带用户？",
-            "expected_tables": ["edpi_broadband_user_daily"],
-            "expected_columns": ["market_name"],
-        },
-        {
-            "id": "broadband_list_by_market",
-            "category": "detail",
-            "question": f"列出 {broadband_b} 的宽带账号和联系电话，最多100条",
-            "expected_tables": ["edpi_broadband_user_daily"],
-            "expected_columns": ["pppoe_account", "market_name"],
-            "requires_limit": True,
-        },
-        {
-            "id": "mixed_mobile_broadband_community",
-            "category": "mixed",
-            "question": f"{shared} 有哪些移网用户和宽带用户？",
-            "expected_tables": ["yw_yh_zfb_daily", "edpi_broadband_user_daily"],
-            "expected_columns": ["RESIDENT_AREA"],
-            "requires_limit": True,
-        },
-        {
-            "id": "mobile_top_communities",
-            "category": "ranking",
-            "question": "移网用户数最多的10个小区是哪些？",
-            "expected_tables": ["yw_yh_zfb_daily"],
-            "expected_columns": ["RESIDENT_AREA"],
-            "requires_group_by": True,
-            "requires_limit": True,
-        },
-        {
-            "id": "broadband_top_markets",
-            "category": "ranking",
-            "question": "宽带用户数最多的10个小区或市场是哪些？",
-            "expected_tables": ["edpi_broadband_user_daily"],
-            "expected_columns": ["market_name"],
-            "requires_group_by": True,
-            "requires_limit": True,
-        },
-        {
-            "id": "mobile_city_count",
-            "category": "aggregate",
-            "question": f"{mobile_city} 的移网用户数量是多少？",
-            "expected_tables": ["yw_yh_zfb_daily"],
-            "expected_columns": ["RESIDENT_CITY"],
-        },
-        {
-            "id": "broadband_city_count",
-            "category": "aggregate",
-            "question": f"{broadband_city} 的宽带用户数量是多少？",
-            "expected_tables": ["edpi_broadband_user_daily"],
-            "expected_columns": ["city"],
-        },
-        {
-            "id": "mixed_city_compare",
-            "category": "mixed",
-            "question": f"对比 {mobile_city} 的移网用户和宽带用户数量",
-            "expected_tables": ["yw_yh_zfb_daily", "edpi_broadband_user_daily"],
-            "expected_columns": ["RESIDENT_CITY", "city"],
-        },
+
+def pick(values: list[str], index: int) -> str:
+    return values[index % len(values)]
+
+
+def build_cases(seed: dict[str, list[dict[str, Any]]]) -> list[dict[str, Any]]:
+    mobile_communities = seed_values(seed, "mobile_communities")
+    broadband_markets = seed_values(seed, "broadband_markets")
+    mobile_cities = seed_values(seed, "mobile_cities")
+    broadband_cities = seed_values(seed, "broadband_cities")
+    shared_terms = [
+        "汇景新城",
+        "广东南方职业学院（睦州校区）",
+        "广东培正学院",
+        "广州南方学院",
+        "深圳技术大学",
+        "广东科技学院",
+        "东莞理工学院",
+        "大源南边村",
+        "白沙村",
+        "江夏村",
     ]
+
+    cases: list[dict[str, Any]] = []
+
+    def add(
+        case_id: str,
+        category: str,
+        question: str,
+        expected_tables: list[str],
+        expected_columns: list[str] | None = None,
+        requires_limit: bool = False,
+        requires_group_by: bool = False,
+    ) -> None:
+        cases.append(
+            {
+                "id": case_id,
+                "category": category,
+                "question": question,
+                "expected_tables": expected_tables,
+                "expected_columns": expected_columns or [],
+                "requires_limit": requires_limit,
+                "requires_group_by": requires_group_by,
+            }
+        )
+
+    for index in range(10):
+        community = pick(mobile_communities, index)
+        add(
+            f"mobile_count_community_{index + 1:02d}",
+            "aggregate",
+            f"{community} 有多少移网用户？",
+            ["yw_yh_zfb_daily"],
+            ["RESIDENT_AREA"],
+        )
+        add(
+            f"mobile_detail_community_{index + 1:02d}",
+            "detail",
+            f"列出 {community} 的移网用户号码和归属城市，最多100条",
+            ["yw_yh_zfb_daily"],
+            ["SERIAL_NUMBER", "RESIDENT_AREA", "RESIDENT_CITY"],
+            requires_limit=True,
+        )
+
+    for index in range(10):
+        market = pick(broadband_markets, index)
+        add(
+            f"broadband_count_market_{index + 1:02d}",
+            "aggregate",
+            f"{market} 有多少宽带用户？",
+            ["edpi_broadband_user_daily"],
+            ["market_name", "b_install_address"],
+        )
+        add(
+            f"broadband_detail_market_{index + 1:02d}",
+            "detail",
+            f"列出 {market} 的宽带账号、联系电话和带宽，最多100条",
+            ["edpi_broadband_user_daily"],
+            ["pppoe_account", "b_contact_number", "bandwidth", "market_name"],
+            requires_limit=True,
+        )
+
+    for index in range(5):
+        city = pick(mobile_cities, index)
+        add(
+            f"mobile_count_city_{index + 1:02d}",
+            "aggregate",
+            f"{city} 的移网用户数量是多少？",
+            ["yw_yh_zfb_daily"],
+            ["RESIDENT_CITY"],
+        )
+        add(
+            f"mobile_top_community_city_{index + 1:02d}",
+            "ranking",
+            f"{city} 移网用户数最多的10个小区是哪些？",
+            ["yw_yh_zfb_daily"],
+            ["RESIDENT_CITY", "RESIDENT_AREA"],
+            requires_group_by=True,
+            requires_limit=True,
+        )
+
+    for index in range(5):
+        city = pick(broadband_cities, index)
+        add(
+            f"broadband_count_city_{index + 1:02d}",
+            "aggregate",
+            f"{city} 的宽带用户数量是多少？",
+            ["edpi_broadband_user_daily"],
+            ["city"],
+        )
+        add(
+            f"broadband_top_market_city_{index + 1:02d}",
+            "ranking",
+            f"{city} 宽带用户数最多的10个小区或市场是哪些？",
+            ["edpi_broadband_user_daily"],
+            ["city", "market_name"],
+            requires_group_by=True,
+            requires_limit=True,
+        )
+
+    for index in range(10):
+        term = shared_terms[index]
+        add(
+            f"mixed_detail_term_{index + 1:02d}",
+            "mixed",
+            f"{term} 有哪些移网用户和宽带用户？",
+            ["yw_yh_zfb_daily", "edpi_broadband_user_daily"],
+            ["RESIDENT_AREA", "market_name", "b_install_address"],
+            requires_limit=True,
+        )
+
+    for index in range(10):
+        term = shared_terms[index]
+        add(
+            f"mixed_count_term_{index + 1:02d}",
+            "mixed",
+            f"统计 {term} 相关的移网用户数和宽带用户数",
+            ["yw_yh_zfb_daily", "edpi_broadband_user_daily"],
+            ["RESIDENT_AREA", "market_name", "b_install_address"],
+        )
+
+    ranking_questions = [
+        (
+            "mobile_top_communities_overall",
+            "移网用户数最多的20个小区是哪些？",
+            ["yw_yh_zfb_daily"],
+            ["RESIDENT_AREA"],
+        ),
+        (
+            "broadband_top_markets_overall",
+            "宽带用户数最多的20个小区或市场是哪些？",
+            ["edpi_broadband_user_daily"],
+            ["market_name"],
+        ),
+        (
+            "mobile_city_distribution",
+            "各城市移网用户数量排名前10是什么？",
+            ["yw_yh_zfb_daily"],
+            ["RESIDENT_CITY"],
+        ),
+        (
+            "broadband_city_distribution",
+            "各城市宽带用户数量排名前10是什么？",
+            ["edpi_broadband_user_daily"],
+            ["city"],
+        ),
+        (
+            "mobile_user_type_distribution",
+            "移网用户按 USER_TYPE_CODE 分布数量是多少？",
+            ["yw_yh_zfb_daily"],
+            ["USER_TYPE_CODE"],
+        ),
+        (
+            "broadband_bandwidth_distribution",
+            "宽带用户按带宽 bandwidth 分布数量排名前20是什么？",
+            ["edpi_broadband_user_daily"],
+            ["bandwidth"],
+        ),
+        (
+            "mobile_broadband_operator_distribution",
+            "移网表里 BROADBAND_OPERATOR 各类型数量是多少？",
+            ["yw_yh_zfb_daily"],
+            ["BROADBAND_OPERATOR"],
+        ),
+        (
+            "broadband_user_state_distribution",
+            "宽带用户按 user_state 分布数量是多少？",
+            ["edpi_broadband_user_daily"],
+            ["user_state"],
+        ),
+        (
+            "mobile_top_city_community_pair",
+            "移网用户按城市和小区组合统计，数量最多的20组是什么？",
+            ["yw_yh_zfb_daily"],
+            ["RESIDENT_CITY", "RESIDENT_AREA"],
+        ),
+        (
+            "broadband_top_city_market_pair",
+            "宽带用户按城市和市场组合统计，数量最多的20组是什么？",
+            ["edpi_broadband_user_daily"],
+            ["city", "market_name"],
+        ),
+    ]
+    for case_id, question, tables, columns in ranking_questions:
+        add(
+            case_id,
+            "ranking",
+            question,
+            tables,
+            columns,
+            requires_group_by=True,
+            requires_limit=True,
+        )
+
+    for index in range(10):
+        city = pick(mobile_cities, index)
+        add(
+            f"mixed_city_compare_{index + 1:02d}",
+            "mixed",
+            f"对比 {city} 的移网用户和宽带用户数量",
+            ["yw_yh_zfb_daily", "edpi_broadband_user_daily"],
+            ["RESIDENT_CITY", "city"],
+        )
+
+    if len(cases) != 100:
+        raise RuntimeError(f"Expected 100 benchmark cases, got {len(cases)}")
+    return cases
 
 
 def evaluate_case(case: dict[str, Any], sql: str, execute_result: dict[str, Any] | None) -> dict[str, Any]:
@@ -470,14 +615,49 @@ def main() -> int:
     parser.add_argument("--output-dir", default="benchmark/v1.0")
     parser.add_argument("--repeats", type=int, default=1)
     parser.add_argument("--no-execute", action="store_true")
+    parser.add_argument(
+        "--cases-only",
+        action="store_true",
+        help="Only discover/build seed and case files; do not call the LLM.",
+    )
+    parser.add_argument(
+        "--seed-file",
+        help="Use an existing seed.json file instead of discovering seed values.",
+    )
     args = parser.parse_args()
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    client = BenchmarkClient(args.backend_url, args.datasource_name)
-    seed = discover_seed_values(client)
+    client = (
+        None
+        if args.seed_file and args.cases_only
+        else BenchmarkClient(args.backend_url, args.datasource_name)
+    )
+    if args.seed_file:
+        seed = json.loads(Path(args.seed_file).read_text(encoding="utf-8"))
+    else:
+        assert client is not None
+        seed = discover_seed_values(client)
     cases = build_cases(seed)
+
+    (output_dir / "seed.json").write_text(
+        json.dumps(seed, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    (output_dir / "cases.json").write_text(
+        json.dumps(cases, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    if args.cases_only:
+        print(
+            json.dumps(
+                {"seed_groups": list(seed.keys()), "case_count": len(cases)},
+                ensure_ascii=False,
+            )
+        )
+        return 0
 
     records: list[dict[str, Any]] = []
     for run_index in range(1, args.repeats + 1):
@@ -495,14 +675,6 @@ def main() -> int:
     summary = summarize(records)
     write_jsonl(output_dir / "results.jsonl", records)
     write_csv(output_dir / "results.csv", records)
-    (output_dir / "seed.json").write_text(
-        json.dumps(seed, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    (output_dir / "cases.json").write_text(
-        json.dumps(cases, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
     (output_dir / "summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

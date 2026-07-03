@@ -2,13 +2,16 @@
 
 ## Baseline: V1.0 Text2SQL
 
-The initial benchmark baseline is stored in:
+Benchmark artifacts are stored in:
 
+- `benchmark/v1.0-100`: 100-question benchmark suite for ongoing optimization
 - `benchmark/v1.0`: 10-run smoke baseline
 - `benchmark/v1.0-r3`: 30-run baseline used for comparison
 
+Use `benchmark/v1.0-100/cases.json` as the ongoing benchmark question set.
 Use `benchmark/v1.0-r3/summary.json`, `results.csv`, and `results.jsonl` as the
-baseline before prompt, schema-context, SQL-normalization, or model changes.
+historical baseline before prompt, schema-context, SQL-normalization, or model
+changes.
 
 Current V1.0 baseline:
 

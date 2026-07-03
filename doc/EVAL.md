@@ -12,6 +12,28 @@ benchmark from real ClickHouse values. The script:
 - records generated SQL, pass/fail checks, latency, row count, truncation,
   estimated token usage, fallback status, and errors.
 
+The current V1.0 suite contains `100` deterministic questions generated from
+real seed values. The cases are stored in `benchmark/v1.0-100/cases.json`.
+
+Case mix:
+
+| Category | Count |
+| --- | ---: |
+| Aggregate/count | `30` |
+| Detail/listing | `20` |
+| Ranking/TopN | `20` |
+| Mixed mobile + broadband | `30` |
+
+Coverage:
+
+- mobile community count and detail questions;
+- broadband market count and detail questions;
+- city-level mobile and broadband questions;
+- TopN community/market/city/user-type/bandwidth distributions;
+- mixed mobile + broadband detail and count questions for shared terms;
+- deterministic checks for expected table hits, expected column hits, LIMIT,
+  GROUP BY, hallucinated table/field names, executability, latency, and tokens.
+
 Run on A100:
 
 ```bash
@@ -19,8 +41,17 @@ ssh A100BMS-2
 cd /data1/text2sql/releases/amd64-verify
 python3 run_v1_benchmark.py \
   --backend-url http://127.0.0.1:38000 \
-  --output-dir /data1/text2sql/benchmarks/v1.0-r3 \
-  --repeats 3
+  --output-dir /data1/text2sql/benchmarks/v1.0-100 \
+  --repeats 1
+```
+
+Generate or refresh the case file without calling the model:
+
+```bash
+python3 scripts/run_v1_benchmark.py \
+  --seed-file benchmark/v1.0-r3/seed.json \
+  --output-dir benchmark/v1.0-100 \
+  --cases-only
 ```
 
 Copy results back locally:
@@ -46,7 +77,19 @@ The current MiniMax-compatible endpoint does not return authoritative usage in
 every path, so token estimates are always recorded and provider usage is
 recorded when present.
 
-## V1.0 Baseline
+## V1.0 100-Question Suite
+
+- Directory: `benchmark/v1.0-100`
+- Case file: `benchmark/v1.0-100/cases.json`
+- Seed file: `benchmark/v1.0-100/seed.json`
+- Case count: `100`
+- Unique IDs: `100`
+
+This suite is intended to replace the earlier 10-case smoke suite for ongoing
+optimization comparisons. Running all 100 questions once is expected to take
+material time because SQL generation is model-bound.
+
+## Historical V1.0 Baseline
 
 Baseline run:
 
