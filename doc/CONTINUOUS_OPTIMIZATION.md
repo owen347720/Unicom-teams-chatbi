@@ -4,11 +4,13 @@
 
 Benchmark artifacts are stored in:
 
+- `benchmark/v1.1-gold-1000`: 1000-question gold benchmark suite for business evaluation
 - `benchmark/v1.0-100`: 100-question benchmark suite for ongoing optimization
 - `benchmark/v1.0`: 10-run smoke baseline
 - `benchmark/v1.0-r3`: 30-run baseline used for comparison
 
-Use `benchmark/v1.0-100/cases.json` as the ongoing benchmark question set.
+Use `benchmark/v1.1-gold-1000/cases.json` as the primary benchmark question set.
+Use `benchmark/v1.0-100/cases.json` as a lighter smoke/regression suite.
 Use `benchmark/v1.0-r3/summary.json`, `results.csv`, and `results.jsonl` as the
 historical baseline before prompt, schema-context, SQL-normalization, or model
 changes.
@@ -23,6 +25,10 @@ Current V1.0 baseline:
 - Average estimated total tokens: `2961.8`
 
 ## Optimization Backlog
+
+0. Execute V1.1 gold snapshots and full system run after A100 SSH/HTTP access is
+   restored. The suite is generated locally, but `expected_result` is currently
+   pending for SQL cases.
 
 1. Fix ClickHouse alias safety.
    Generated SQL frequently uses Chinese aliases without quoting. Add prompt

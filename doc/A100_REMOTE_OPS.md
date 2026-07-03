@@ -96,6 +96,22 @@ Benchmark outputs:
 - `summary.json`: aggregate metrics
 - `report.md`: human-readable summary
 
+Run the V1.1 gold benchmark after syncing the scripts and case files:
+
+```bash
+cd /data1/text2sql/releases/amd64-verify
+python3 generate_v11_gold_benchmark.py \
+  --seed-file /data1/text2sql/benchmarks/v1.1-gold-1000/seed.json \
+  --output-dir /data1/text2sql/benchmarks/v1.1-gold-1000 \
+  --execute-gold \
+  --backend-url http://127.0.0.1:38000
+
+python3 run_v11_gold_benchmark.py \
+  --cases-file /data1/text2sql/benchmarks/v1.1-gold-1000/cases.json \
+  --backend-url http://127.0.0.1:38000 \
+  --output-dir /data1/text2sql/benchmarks/v1.1-gold-1000-run
+```
+
 Load a replacement image:
 
 ```bash

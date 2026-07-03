@@ -1,0 +1,30 @@
+{
+  "db_schema_version": "chatbi-clickhouse-v1.1-2026-07-03",
+  "tables": {
+    "yw_yh_zfb_daily": {
+      "description": "移网/移动用户明细表",
+      "columns": {
+        "SERIAL_NUMBER": "用户号码",
+        "USER_ID": "用户 ID",
+        "USER_TYPE_CODE": "用户类型编码",
+        "RESIDENT_AREA": "居住小区/区域",
+        "RESIDENT_CITY": "归属城市",
+        "BROADBAND_OPERATOR": "宽带运营商/关联宽带标识"
+      }
+    },
+    "edpi_broadband_user_daily": {
+      "description": "宽带用户明细表",
+      "columns": {
+        "pppoe_account": "宽带账号",
+        "b_serial_number": "关联手机/联系电话号码",
+        "b_contact_number": "联系电话",
+        "b_install_address": "装机地址",
+        "market_name": "小区/市场/学校名称",
+        "city": "城市",
+        "bandwidth": "带宽",
+        "user_state": "用户状态"
+      }
+    }
+  },
+  "generated_at": "2026-07-03T02:02:12.303103+00:00"
+}

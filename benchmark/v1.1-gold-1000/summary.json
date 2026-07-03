@@ -1,0 +1,28 @@
+{
+  "db_schema_version": "chatbi-clickhouse-v1.1-2026-07-03",
+  "case_count": 1000,
+  "category_counts": {
+    "aggregation": 200,
+    "ambiguous": 100,
+    "business_rule": 150,
+    "join": 150,
+    "noisy_language": 50,
+    "safety": 50,
+    "simple_query": 150,
+    "time": 150
+  },
+  "difficulty_counts": {
+    "easy": 290,
+    "hard": 350,
+    "medium": 360
+  },
+  "judge_method_counts": {
+    "execution_match": 700,
+    "human_review": 300
+  },
+  "expected_result_status_counts": {
+    "not_sql_task": 300,
+    "pending_execution": 700
+  },
+  "generated_at": "2026-07-03T02:02:12.303622+00:00"
+}
