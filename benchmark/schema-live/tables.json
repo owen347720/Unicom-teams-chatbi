@@ -1,0 +1,59 @@
+{
+  "columns": [
+    "table",
+    "column_count"
+  ],
+  "rows": [
+    [
+      "T_D25E4B065604571B496_XLSX",
+      "3"
+    ],
+    [
+      "edpi_broadband_user_backup_20260428",
+      "74"
+    ],
+    [
+      "edpi_broadband_user_backup_20260428_bak",
+      "74"
+    ],
+    [
+      "edpi_broadband_user_daily",
+      "74"
+    ],
+    [
+      "ods_df_4g_zero_flow",
+      "14"
+    ],
+    [
+      "ods_df_5g_zero_flow",
+      "13"
+    ],
+    [
+      "ods_df_pub_mfr",
+      "24"
+    ],
+    [
+      "ods_df_rme_eqp",
+      "289"
+    ],
+    [
+      "ods_df_wls_secconfig",
+      "173"
+    ],
+    [
+      "ods_spc_region",
+      "34"
+    ],
+    [
+      "pm_4g_5g_wireless_kpi_collect",
+      "15"
+    ],
+    [
+      "yw_yh_zfb_daily",
+      "16"
+    ]
+  ],
+  "row_count": 12,
+  "execution_time": 0.067,
+  "truncated": false
+}

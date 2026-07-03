@@ -1,0 +1,4044 @@
+{
+  "db_schema_version": "chatbi-clickhouse-v1.2-schema-live-2026-07-03",
+  "tables": {
+    "T_D25E4B065604571B496_XLSX": [
+      {
+        "name": "A_D25E4B065604571B497",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "A_D25E4B065604571B498",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "A_D25E4B065604571B499",
+        "type": "String",
+        "position": "3"
+      }
+    ],
+    "edpi_broadband_user_backup_20260428": [
+      {
+        "name": "pppoe_account",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "bandwidth",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "total_flow_GB",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "rival_network_yidong",
+        "type": "String",
+        "position": "4"
+      },
+      {
+        "name": "rival_network_dianxin",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "top1_active_time_period",
+        "type": "String",
+        "position": "6"
+      },
+      {
+        "name": "top2_active_time_period",
+        "type": "String",
+        "position": "7"
+      },
+      {
+        "name": "top3_active_time_period",
+        "type": "String",
+        "position": "8"
+      },
+      {
+        "name": "exists_kids",
+        "type": "String",
+        "position": "9"
+      },
+      {
+        "name": "top1_game_app",
+        "type": "String",
+        "position": "10"
+      },
+      {
+        "name": "top1_game_app_duration",
+        "type": "String",
+        "position": "11"
+      },
+      {
+        "name": "top1_used_app",
+        "type": "String",
+        "position": "12"
+      },
+      {
+        "name": "top1_used_app_duration",
+        "type": "String",
+        "position": "13"
+      },
+      {
+        "name": "network_quality",
+        "type": "String",
+        "position": "14"
+      },
+      {
+        "name": "network_quality_score",
+        "type": "String",
+        "position": "15"
+      },
+      {
+        "name": "optical_power",
+        "type": "String",
+        "position": "16"
+      },
+      {
+        "name": "router_and_release_date",
+        "type": "String",
+        "position": "17"
+      },
+      {
+        "name": "ont_and_registration_date",
+        "type": "String",
+        "position": "18"
+      },
+      {
+        "name": "apartment_type",
+        "type": "String",
+        "position": "19"
+      },
+      {
+        "name": "apartment_area",
+        "type": "String",
+        "position": "20"
+      },
+      {
+        "name": "inferior_quality_reasons",
+        "type": "String",
+        "position": "21"
+      },
+      {
+        "name": "device_num",
+        "type": "String",
+        "position": "22"
+      },
+      {
+        "name": "phone_num",
+        "type": "String",
+        "position": "23"
+      },
+      {
+        "name": "watch_num",
+        "type": "String",
+        "position": "24"
+      },
+      {
+        "name": "pc_num",
+        "type": "String",
+        "position": "25"
+      },
+      {
+        "name": "tv_num",
+        "type": "String",
+        "position": "26"
+      },
+      {
+        "name": "camera_num",
+        "type": "String",
+        "position": "27"
+      },
+      {
+        "name": "projector_num",
+        "type": "String",
+        "position": "28"
+      },
+      {
+        "name": "other_device_num",
+        "type": "String",
+        "position": "29"
+      },
+      {
+        "name": "device_bandwidth_mismatch",
+        "type": "String",
+        "position": "30"
+      },
+      {
+        "name": "household_population",
+        "type": "String",
+        "position": "31"
+      },
+      {
+        "name": "high_level_phone_num",
+        "type": "String",
+        "position": "32"
+      },
+      {
+        "name": "mid_high_level_phone_num",
+        "type": "String",
+        "position": "33"
+      },
+      {
+        "name": "mid_level_phone_num",
+        "type": "String",
+        "position": "34"
+      },
+      {
+        "name": "low_level_phone_num",
+        "type": "String",
+        "position": "35"
+      },
+      {
+        "name": "consumption_level",
+        "type": "String",
+        "position": "36"
+      },
+      {
+        "name": "online_device_max_num",
+        "type": "String",
+        "position": "37"
+      },
+      {
+        "name": "exists_camera",
+        "type": "String",
+        "position": "38"
+      },
+      {
+        "name": "camera_brand",
+        "type": "String",
+        "position": "39"
+      },
+      {
+        "name": "camera_type",
+        "type": "String",
+        "position": "40"
+      },
+      {
+        "name": "video_vip",
+        "type": "String",
+        "position": "41"
+      },
+      {
+        "name": "broadband_dependency",
+        "type": "String",
+        "position": "42"
+      },
+      {
+        "name": "update_date",
+        "type": "String",
+        "position": "43"
+      },
+      {
+        "name": "missing_dates",
+        "type": "String",
+        "position": "44"
+      },
+      {
+        "name": "main_low_quality_video_app",
+        "type": "String",
+        "position": "45"
+      },
+      {
+        "name": "main_low_quality_video_app_score",
+        "type": "String",
+        "position": "46"
+      },
+      {
+        "name": "main_low_quality_game_app",
+        "type": "String",
+        "position": "47"
+      },
+      {
+        "name": "main_low_quality_game_app_score",
+        "type": "String",
+        "position": "48"
+      },
+      {
+        "name": "main_low_quality_other_app",
+        "type": "String",
+        "position": "49"
+      },
+      {
+        "name": "main_low_quality_other_app_score",
+        "type": "Nullable(Decimal(18, 2))",
+        "position": "50"
+      },
+      {
+        "name": "main_low_quality_url",
+        "type": "String",
+        "position": "51"
+      },
+      {
+        "name": "marketing_advice",
+        "type": "String",
+        "position": "52"
+      },
+      {
+        "name": "city",
+        "type": "String",
+        "position": "53"
+      },
+      {
+        "name": "main_app_low_quality_time_network_score",
+        "type": "String",
+        "position": "54"
+      },
+      {
+        "name": "main_low_quality_video_app_url_domain",
+        "type": "String",
+        "position": "55"
+      },
+      {
+        "name": "main_low_quality_video_app_url_path",
+        "type": "String",
+        "position": "56"
+      },
+      {
+        "name": "main_low_quality_game_app_url_domain",
+        "type": "String",
+        "position": "57"
+      },
+      {
+        "name": "main_low_quality_game_app_url_path",
+        "type": "String",
+        "position": "58"
+      },
+      {
+        "name": "main_low_quality_other_app_url_domain",
+        "type": "String",
+        "position": "59"
+      },
+      {
+        "name": "main_low_quality_other_app_url_path",
+        "type": "String",
+        "position": "60"
+      },
+      {
+        "name": "top1_flow_usage_terminal_device",
+        "type": "String",
+        "position": "61"
+      },
+      {
+        "name": "top1_flow_usage_terminal_device_MB",
+        "type": "String",
+        "position": "62"
+      },
+      {
+        "name": "data_date",
+        "type": "Date",
+        "position": "63"
+      },
+      {
+        "name": "b_complete_date",
+        "type": "String",
+        "position": "64"
+      },
+      {
+        "name": "b_serial_number",
+        "type": "String",
+        "position": "65"
+      },
+      {
+        "name": "b_open_date",
+        "type": "String",
+        "position": "66"
+      },
+      {
+        "name": "b_contact_number",
+        "type": "String",
+        "position": "67"
+      },
+      {
+        "name": "b_contact_other_number",
+        "type": "String",
+        "position": "68"
+      },
+      {
+        "name": "b_target_market_id",
+        "type": "String",
+        "position": "69"
+      },
+      {
+        "name": "b_install_address",
+        "type": "String",
+        "position": "70"
+      },
+      {
+        "name": "b_chnl_cooperate_type",
+        "type": "String",
+        "position": "71"
+      },
+      {
+        "name": "market_id",
+        "type": "String",
+        "position": "72"
+      },
+      {
+        "name": "market_name",
+        "type": "String",
+        "position": "73"
+      },
+      {
+        "name": "whether_important_market",
+        "type": "String",
+        "position": "74"
+      }
+    ],
+    "edpi_broadband_user_backup_20260428_bak": [
+      {
+        "name": "pppoe_account",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "bandwidth",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "total_flow_GB",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "rival_network_yidong",
+        "type": "String",
+        "position": "4"
+      },
+      {
+        "name": "rival_network_dianxin",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "top1_active_time_period",
+        "type": "String",
+        "position": "6"
+      },
+      {
+        "name": "top2_active_time_period",
+        "type": "String",
+        "position": "7"
+      },
+      {
+        "name": "top3_active_time_period",
+        "type": "String",
+        "position": "8"
+      },
+      {
+        "name": "exists_kids",
+        "type": "String",
+        "position": "9"
+      },
+      {
+        "name": "top1_game_app",
+        "type": "String",
+        "position": "10"
+      },
+      {
+        "name": "top1_game_app_duration",
+        "type": "String",
+        "position": "11"
+      },
+      {
+        "name": "top1_used_app",
+        "type": "String",
+        "position": "12"
+      },
+      {
+        "name": "top1_used_app_duration",
+        "type": "String",
+        "position": "13"
+      },
+      {
+        "name": "network_quality",
+        "type": "String",
+        "position": "14"
+      },
+      {
+        "name": "network_quality_score",
+        "type": "String",
+        "position": "15"
+      },
+      {
+        "name": "optical_power",
+        "type": "String",
+        "position": "16"
+      },
+      {
+        "name": "router_and_release_date",
+        "type": "String",
+        "position": "17"
+      },
+      {
+        "name": "ont_and_registration_date",
+        "type": "String",
+        "position": "18"
+      },
+      {
+        "name": "apartment_type",
+        "type": "String",
+        "position": "19"
+      },
+      {
+        "name": "apartment_area",
+        "type": "String",
+        "position": "20"
+      },
+      {
+        "name": "inferior_quality_reasons",
+        "type": "String",
+        "position": "21"
+      },
+      {
+        "name": "device_num",
+        "type": "Nullable(Decimal(18, 2))",
+        "position": "22"
+      },
+      {
+        "name": "phone_num",
+        "type": "Decimal(18, 2)",
+        "position": "23"
+      },
+      {
+        "name": "watch_num",
+        "type": "Decimal(18, 2)",
+        "position": "24"
+      },
+      {
+        "name": "pc_num",
+        "type": "String",
+        "position": "25"
+      },
+      {
+        "name": "tv_num",
+        "type": "String",
+        "position": "26"
+      },
+      {
+        "name": "camera_num",
+        "type": "String",
+        "position": "27"
+      },
+      {
+        "name": "projector_num",
+        "type": "String",
+        "position": "28"
+      },
+      {
+        "name": "other_device_num",
+        "type": "String",
+        "position": "29"
+      },
+      {
+        "name": "device_bandwidth_mismatch",
+        "type": "String",
+        "position": "30"
+      },
+      {
+        "name": "household_population",
+        "type": "String",
+        "position": "31"
+      },
+      {
+        "name": "high_level_phone_num",
+        "type": "String",
+        "position": "32"
+      },
+      {
+        "name": "mid_high_level_phone_num",
+        "type": "String",
+        "position": "33"
+      },
+      {
+        "name": "mid_level_phone_num",
+        "type": "String",
+        "position": "34"
+      },
+      {
+        "name": "low_level_phone_num",
+        "type": "String",
+        "position": "35"
+      },
+      {
+        "name": "consumption_level",
+        "type": "String",
+        "position": "36"
+      },
+      {
+        "name": "online_device_max_num",
+        "type": "String",
+        "position": "37"
+      },
+      {
+        "name": "exists_camera",
+        "type": "String",
+        "position": "38"
+      },
+      {
+        "name": "camera_brand",
+        "type": "String",
+        "position": "39"
+      },
+      {
+        "name": "camera_type",
+        "type": "String",
+        "position": "40"
+      },
+      {
+        "name": "video_vip",
+        "type": "String",
+        "position": "41"
+      },
+      {
+        "name": "broadband_dependency",
+        "type": "String",
+        "position": "42"
+      },
+      {
+        "name": "update_date",
+        "type": "String",
+        "position": "43"
+      },
+      {
+        "name": "missing_dates",
+        "type": "String",
+        "position": "44"
+      },
+      {
+        "name": "main_low_quality_video_app",
+        "type": "String",
+        "position": "45"
+      },
+      {
+        "name": "main_low_quality_video_app_score",
+        "type": "String",
+        "position": "46"
+      },
+      {
+        "name": "main_low_quality_game_app",
+        "type": "String",
+        "position": "47"
+      },
+      {
+        "name": "main_low_quality_game_app_score",
+        "type": "String",
+        "position": "48"
+      },
+      {
+        "name": "main_low_quality_other_app",
+        "type": "String",
+        "position": "49"
+      },
+      {
+        "name": "main_low_quality_other_app_score",
+        "type": "Nullable(Decimal(18, 2))",
+        "position": "50"
+      },
+      {
+        "name": "main_low_quality_url",
+        "type": "String",
+        "position": "51"
+      },
+      {
+        "name": "marketing_advice",
+        "type": "String",
+        "position": "52"
+      },
+      {
+        "name": "city",
+        "type": "String",
+        "position": "53"
+      },
+      {
+        "name": "main_app_low_quality_time_network_score",
+        "type": "String",
+        "position": "54"
+      },
+      {
+        "name": "main_low_quality_video_app_url_domain",
+        "type": "String",
+        "position": "55"
+      },
+      {
+        "name": "main_low_quality_video_app_url_path",
+        "type": "String",
+        "position": "56"
+      },
+      {
+        "name": "main_low_quality_game_app_url_domain",
+        "type": "String",
+        "position": "57"
+      },
+      {
+        "name": "main_low_quality_game_app_url_path",
+        "type": "String",
+        "position": "58"
+      },
+      {
+        "name": "main_low_quality_other_app_url_domain",
+        "type": "String",
+        "position": "59"
+      },
+      {
+        "name": "main_low_quality_other_app_url_path",
+        "type": "String",
+        "position": "60"
+      },
+      {
+        "name": "top1_flow_usage_terminal_device",
+        "type": "String",
+        "position": "61"
+      },
+      {
+        "name": "top1_flow_usage_terminal_device_MB",
+        "type": "String",
+        "position": "62"
+      },
+      {
+        "name": "data_date",
+        "type": "Date",
+        "position": "63"
+      },
+      {
+        "name": "b_complete_date",
+        "type": "String",
+        "position": "64"
+      },
+      {
+        "name": "b_serial_number",
+        "type": "String",
+        "position": "65"
+      },
+      {
+        "name": "b_open_date",
+        "type": "String",
+        "position": "66"
+      },
+      {
+        "name": "b_contact_number",
+        "type": "String",
+        "position": "67"
+      },
+      {
+        "name": "b_contact_other_number",
+        "type": "String",
+        "position": "68"
+      },
+      {
+        "name": "b_target_market_id",
+        "type": "String",
+        "position": "69"
+      },
+      {
+        "name": "b_install_address",
+        "type": "String",
+        "position": "70"
+      },
+      {
+        "name": "b_chnl_cooperate_type",
+        "type": "String",
+        "position": "71"
+      },
+      {
+        "name": "market_id",
+        "type": "String",
+        "position": "72"
+      },
+      {
+        "name": "market_name",
+        "type": "String",
+        "position": "73"
+      },
+      {
+        "name": "whether_important_market",
+        "type": "String",
+        "position": "74"
+      }
+    ],
+    "edpi_broadband_user_daily": [
+      {
+        "name": "pppoe_account",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "bandwidth",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "total_flow_GB",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "rival_network_yidong",
+        "type": "String",
+        "position": "4"
+      },
+      {
+        "name": "rival_network_dianxin",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "top1_active_time_period",
+        "type": "String",
+        "position": "6"
+      },
+      {
+        "name": "top2_active_time_period",
+        "type": "String",
+        "position": "7"
+      },
+      {
+        "name": "top3_active_time_period",
+        "type": "String",
+        "position": "8"
+      },
+      {
+        "name": "exists_kids",
+        "type": "String",
+        "position": "9"
+      },
+      {
+        "name": "top1_game_app",
+        "type": "String",
+        "position": "10"
+      },
+      {
+        "name": "top1_game_app_duration",
+        "type": "String",
+        "position": "11"
+      },
+      {
+        "name": "top1_used_app",
+        "type": "String",
+        "position": "12"
+      },
+      {
+        "name": "top1_used_app_duration",
+        "type": "String",
+        "position": "13"
+      },
+      {
+        "name": "network_quality",
+        "type": "String",
+        "position": "14"
+      },
+      {
+        "name": "network_quality_score",
+        "type": "String",
+        "position": "15"
+      },
+      {
+        "name": "optical_power",
+        "type": "String",
+        "position": "16"
+      },
+      {
+        "name": "router_and_release_date",
+        "type": "String",
+        "position": "17"
+      },
+      {
+        "name": "ont_and_registration_date",
+        "type": "String",
+        "position": "18"
+      },
+      {
+        "name": "apartment_type",
+        "type": "String",
+        "position": "19"
+      },
+      {
+        "name": "apartment_area",
+        "type": "String",
+        "position": "20"
+      },
+      {
+        "name": "inferior_quality_reasons",
+        "type": "String",
+        "position": "21"
+      },
+      {
+        "name": "device_num",
+        "type": "String",
+        "position": "22"
+      },
+      {
+        "name": "phone_num",
+        "type": "String",
+        "position": "23"
+      },
+      {
+        "name": "watch_num",
+        "type": "String",
+        "position": "24"
+      },
+      {
+        "name": "pc_num",
+        "type": "String",
+        "position": "25"
+      },
+      {
+        "name": "tv_num",
+        "type": "String",
+        "position": "26"
+      },
+      {
+        "name": "camera_num",
+        "type": "String",
+        "position": "27"
+      },
+      {
+        "name": "projector_num",
+        "type": "String",
+        "position": "28"
+      },
+      {
+        "name": "other_device_num",
+        "type": "String",
+        "position": "29"
+      },
+      {
+        "name": "device_bandwidth_mismatch",
+        "type": "String",
+        "position": "30"
+      },
+      {
+        "name": "household_population",
+        "type": "String",
+        "position": "31"
+      },
+      {
+        "name": "high_level_phone_num",
+        "type": "String",
+        "position": "32"
+      },
+      {
+        "name": "mid_high_level_phone_num",
+        "type": "String",
+        "position": "33"
+      },
+      {
+        "name": "mid_level_phone_num",
+        "type": "String",
+        "position": "34"
+      },
+      {
+        "name": "low_level_phone_num",
+        "type": "String",
+        "position": "35"
+      },
+      {
+        "name": "consumption_level",
+        "type": "String",
+        "position": "36"
+      },
+      {
+        "name": "online_device_max_num",
+        "type": "String",
+        "position": "37"
+      },
+      {
+        "name": "exists_camera",
+        "type": "String",
+        "position": "38"
+      },
+      {
+        "name": "camera_brand",
+        "type": "String",
+        "position": "39"
+      },
+      {
+        "name": "camera_type",
+        "type": "String",
+        "position": "40"
+      },
+      {
+        "name": "video_vip",
+        "type": "String",
+        "position": "41"
+      },
+      {
+        "name": "broadband_dependency",
+        "type": "String",
+        "position": "42"
+      },
+      {
+        "name": "update_date",
+        "type": "String",
+        "position": "43"
+      },
+      {
+        "name": "missing_dates",
+        "type": "String",
+        "position": "44"
+      },
+      {
+        "name": "main_low_quality_video_app",
+        "type": "String",
+        "position": "45"
+      },
+      {
+        "name": "main_low_quality_video_app_score",
+        "type": "String",
+        "position": "46"
+      },
+      {
+        "name": "main_low_quality_game_app",
+        "type": "String",
+        "position": "47"
+      },
+      {
+        "name": "main_low_quality_game_app_score",
+        "type": "String",
+        "position": "48"
+      },
+      {
+        "name": "main_low_quality_other_app",
+        "type": "String",
+        "position": "49"
+      },
+      {
+        "name": "main_low_quality_other_app_score",
+        "type": "String",
+        "position": "50"
+      },
+      {
+        "name": "main_low_quality_url",
+        "type": "String",
+        "position": "51"
+      },
+      {
+        "name": "marketing_advice",
+        "type": "String",
+        "position": "52"
+      },
+      {
+        "name": "city",
+        "type": "String",
+        "position": "53"
+      },
+      {
+        "name": "main_app_low_quality_time_network_score",
+        "type": "String",
+        "position": "54"
+      },
+      {
+        "name": "main_low_quality_video_app_url_domain",
+        "type": "String",
+        "position": "55"
+      },
+      {
+        "name": "main_low_quality_video_app_url_path",
+        "type": "String",
+        "position": "56"
+      },
+      {
+        "name": "main_low_quality_game_app_url_domain",
+        "type": "String",
+        "position": "57"
+      },
+      {
+        "name": "main_low_quality_game_app_url_path",
+        "type": "String",
+        "position": "58"
+      },
+      {
+        "name": "main_low_quality_other_app_url_domain",
+        "type": "String",
+        "position": "59"
+      },
+      {
+        "name": "main_low_quality_other_app_url_path",
+        "type": "String",
+        "position": "60"
+      },
+      {
+        "name": "top1_flow_usage_terminal_device",
+        "type": "String",
+        "position": "61"
+      },
+      {
+        "name": "top1_flow_usage_terminal_device_MB",
+        "type": "String",
+        "position": "62"
+      },
+      {
+        "name": "data_date",
+        "type": "Date",
+        "position": "63"
+      },
+      {
+        "name": "b_complete_date",
+        "type": "String",
+        "position": "64"
+      },
+      {
+        "name": "b_serial_number",
+        "type": "String",
+        "position": "65"
+      },
+      {
+        "name": "b_open_date",
+        "type": "String",
+        "position": "66"
+      },
+      {
+        "name": "b_contact_number",
+        "type": "String",
+        "position": "67"
+      },
+      {
+        "name": "b_contact_other_number",
+        "type": "String",
+        "position": "68"
+      },
+      {
+        "name": "b_target_market_id",
+        "type": "String",
+        "position": "69"
+      },
+      {
+        "name": "b_install_address",
+        "type": "String",
+        "position": "70"
+      },
+      {
+        "name": "b_chnl_cooperate_type",
+        "type": "String",
+        "position": "71"
+      },
+      {
+        "name": "market_id",
+        "type": "String",
+        "position": "72"
+      },
+      {
+        "name": "market_name",
+        "type": "String",
+        "position": "73"
+      },
+      {
+        "name": "whether_important_market",
+        "type": "String",
+        "position": "74"
+      }
+    ],
+    "ods_df_4g_zero_flow": [
+      {
+        "name": "sec_id",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "sec_name",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "sec_no",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "p_confirm_status",
+        "type": "Nullable(String)",
+        "position": "4"
+      },
+      {
+        "name": "eqp_name",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "region_name",
+        "type": "String",
+        "position": "6"
+      },
+      {
+        "name": "city",
+        "type": "String",
+        "position": "7"
+      },
+      {
+        "name": "format_type",
+        "type": "Nullable(String)",
+        "position": "8"
+      },
+      {
+        "name": "is_bear_internetbusiness",
+        "type": "Nullable(String)",
+        "position": "9"
+      },
+      {
+        "name": "life_cycle",
+        "type": "Nullable(String)",
+        "position": "10"
+      },
+      {
+        "name": "frequency_point_type",
+        "type": "Nullable(String)",
+        "position": "11"
+      },
+      {
+        "name": "mfr",
+        "type": "String",
+        "position": "12"
+      },
+      {
+        "name": "traffic_flow",
+        "type": "Nullable(String)",
+        "position": "13"
+      },
+      {
+        "name": "partition_day",
+        "type": "Date",
+        "position": "14"
+      }
+    ],
+    "ods_df_5g_zero_flow": [
+      {
+        "name": "sec_id",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "sec_name",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "sec_no",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "p_confirm_status",
+        "type": "Nullable(String)",
+        "position": "4"
+      },
+      {
+        "name": "eqp_name",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "format_type",
+        "type": "Nullable(String)",
+        "position": "6"
+      },
+      {
+        "name": "life_cycle",
+        "type": "Nullable(String)",
+        "position": "7"
+      },
+      {
+        "name": "region_name",
+        "type": "String",
+        "position": "8"
+      },
+      {
+        "name": "city",
+        "type": "String",
+        "position": "9"
+      },
+      {
+        "name": "mfr",
+        "type": "String",
+        "position": "10"
+      },
+      {
+        "name": "frequency_point_type",
+        "type": "Nullable(String)",
+        "position": "11"
+      },
+      {
+        "name": "traffic_flow",
+        "type": "Nullable(String)",
+        "position": "12"
+      },
+      {
+        "name": "partition_day",
+        "type": "Date",
+        "position": "13"
+      }
+    ],
+    "ods_df_pub_mfr": [
+      {
+        "name": "mfr_id",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "mfr",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "speciality_id",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "eqp_type_id",
+        "type": "String",
+        "position": "4"
+      },
+      {
+        "name": "delete_state",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "delete_time",
+        "type": "String",
+        "position": "6"
+      },
+      {
+        "name": "mfr_marker",
+        "type": "String",
+        "position": "7"
+      },
+      {
+        "name": "old_id_eqp",
+        "type": "String",
+        "position": "8"
+      },
+      {
+        "name": "old_sp",
+        "type": "String",
+        "position": "9"
+      },
+      {
+        "name": "lan_id",
+        "type": "String",
+        "position": "10"
+      },
+      {
+        "name": "is_sync_data",
+        "type": "String",
+        "position": "11"
+      },
+      {
+        "name": "notes",
+        "type": "String",
+        "position": "12"
+      },
+      {
+        "name": "link_man",
+        "type": "String",
+        "position": "13"
+      },
+      {
+        "name": "link_tele",
+        "type": "String",
+        "position": "14"
+      },
+      {
+        "name": "email",
+        "type": "String",
+        "position": "15"
+      },
+      {
+        "name": "eqp_frame_struct",
+        "type": "String",
+        "position": "16"
+      },
+      {
+        "name": "create_date",
+        "type": "String",
+        "position": "17"
+      },
+      {
+        "name": "create_op",
+        "type": "String",
+        "position": "18"
+      },
+      {
+        "name": "delete_op",
+        "type": "String",
+        "position": "19"
+      },
+      {
+        "name": "flow_state_id",
+        "type": "String",
+        "position": "20"
+      },
+      {
+        "name": "modify_date",
+        "type": "String",
+        "position": "21"
+      },
+      {
+        "name": "modify_op",
+        "type": "String",
+        "position": "22"
+      },
+      {
+        "name": "wo_id",
+        "type": "String",
+        "position": "23"
+      },
+      {
+        "name": "mfr_icon",
+        "type": "String",
+        "position": "24"
+      }
+    ],
+    "ods_df_rme_eqp": [
+      {
+        "name": "eqp_id",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "eqp_no",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "eqp_name",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "station_id",
+        "type": "String",
+        "position": "4"
+      },
+      {
+        "name": "posit_type_id",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "posit_id",
+        "type": "String",
+        "position": "6"
+      },
+      {
+        "name": "eqp_sequence",
+        "type": "String",
+        "position": "7"
+      },
+      {
+        "name": "speciality_id",
+        "type": "String",
+        "position": "8"
+      },
+      {
+        "name": "eqp_type_id",
+        "type": "String",
+        "position": "9"
+      },
+      {
+        "name": "eqp_model_id",
+        "type": "String",
+        "position": "10"
+      },
+      {
+        "name": "hdwe_ver",
+        "type": "String",
+        "position": "11"
+      },
+      {
+        "name": "sw_ver",
+        "type": "String",
+        "position": "12"
+      },
+      {
+        "name": "protect_style_id",
+        "type": "String",
+        "position": "13"
+      },
+      {
+        "name": "function_name",
+        "type": "String",
+        "position": "14"
+      },
+      {
+        "name": "function_desc",
+        "type": "String",
+        "position": "15"
+      },
+      {
+        "name": "opr_state_id",
+        "type": "String",
+        "position": "16"
+      },
+      {
+        "name": "mnt_state_id",
+        "type": "String",
+        "position": "17"
+      },
+      {
+        "name": "alias",
+        "type": "String",
+        "position": "18"
+      },
+      {
+        "name": "notes",
+        "type": "String",
+        "position": "19"
+      },
+      {
+        "name": "super_eqp_id",
+        "type": "String",
+        "position": "20"
+      },
+      {
+        "name": "power_info",
+        "type": "String",
+        "position": "21"
+      },
+      {
+        "name": "delete_time",
+        "type": "String",
+        "position": "22"
+      },
+      {
+        "name": "delete_state",
+        "type": "String",
+        "position": "23"
+      },
+      {
+        "name": "parent_id",
+        "type": "String",
+        "position": "24"
+      },
+      {
+        "name": "pos_x",
+        "type": "String",
+        "position": "25"
+      },
+      {
+        "name": "pos_y",
+        "type": "String",
+        "position": "26"
+      },
+      {
+        "name": "graph_width",
+        "type": "String",
+        "position": "27"
+      },
+      {
+        "name": "graph_height",
+        "type": "String",
+        "position": "28"
+      },
+      {
+        "name": "isoffset",
+        "type": "String",
+        "position": "29"
+      },
+      {
+        "name": "graph_id",
+        "type": "String",
+        "position": "30"
+      },
+      {
+        "name": "res_type_id",
+        "type": "String",
+        "position": "31"
+      },
+      {
+        "name": "install_time",
+        "type": "String",
+        "position": "32"
+      },
+      {
+        "name": "eqp_from",
+        "type": "String",
+        "position": "33"
+      },
+      {
+        "name": "servicel_time",
+        "type": "String",
+        "position": "34"
+      },
+      {
+        "name": "loopback",
+        "type": "String",
+        "position": "35"
+      },
+      {
+        "name": "slot_count",
+        "type": "String",
+        "position": "36"
+      },
+      {
+        "name": "use_time",
+        "type": "String",
+        "position": "37"
+      },
+      {
+        "name": "asset_info",
+        "type": "String",
+        "position": "38"
+      },
+      {
+        "name": "manage_ipaddress",
+        "type": "String",
+        "position": "39"
+      },
+      {
+        "name": "rma",
+        "type": "String",
+        "position": "40"
+      },
+      {
+        "name": "is_double",
+        "type": "String",
+        "position": "41"
+      },
+      {
+        "name": "modify_op",
+        "type": "String",
+        "position": "42"
+      },
+      {
+        "name": "modiry_date",
+        "type": "String",
+        "position": "43"
+      },
+      {
+        "name": "rack_id",
+        "type": "String",
+        "position": "44"
+      },
+      {
+        "name": "node_id",
+        "type": "String",
+        "position": "45"
+      },
+      {
+        "name": "eqp_name_alias",
+        "type": "String",
+        "position": "46"
+      },
+      {
+        "name": "pa",
+        "type": "String",
+        "position": "47"
+      },
+      {
+        "name": "contractor",
+        "type": "String",
+        "position": "48"
+      },
+      {
+        "name": "product_no",
+        "type": "String",
+        "position": "49"
+      },
+      {
+        "name": "shortcode",
+        "type": "String",
+        "position": "50"
+      },
+      {
+        "name": "shortname",
+        "type": "String",
+        "position": "51"
+      },
+      {
+        "name": "templatename",
+        "type": "String",
+        "position": "52"
+      },
+      {
+        "name": "istemplate",
+        "type": "String",
+        "position": "53"
+      },
+      {
+        "name": "longorlocal",
+        "type": "String",
+        "position": "54"
+      },
+      {
+        "name": "work_mode",
+        "type": "String",
+        "position": "55"
+      },
+      {
+        "name": "address",
+        "type": "String",
+        "position": "56"
+      },
+      {
+        "name": "mapx",
+        "type": "String",
+        "position": "57"
+      },
+      {
+        "name": "mapy",
+        "type": "String",
+        "position": "58"
+      },
+      {
+        "name": "net_type",
+        "type": "String",
+        "position": "59"
+      },
+      {
+        "name": "net_level",
+        "type": "String",
+        "position": "60"
+      },
+      {
+        "name": "old_id_eqp",
+        "type": "String",
+        "position": "61"
+      },
+      {
+        "name": "old_sp",
+        "type": "String",
+        "position": "62"
+      },
+      {
+        "name": "access_type",
+        "type": "String",
+        "position": "63"
+      },
+      {
+        "name": "servicetype",
+        "type": "String",
+        "position": "64"
+      },
+      {
+        "name": "region_id",
+        "type": "String",
+        "position": "65"
+      },
+      {
+        "name": "scp_capability",
+        "type": "String",
+        "position": "66"
+      },
+      {
+        "name": "resource_from",
+        "type": "String",
+        "position": "67"
+      },
+      {
+        "name": "hire_compact_no",
+        "type": "String",
+        "position": "68"
+      },
+      {
+        "name": "extended_property",
+        "type": "String",
+        "position": "69"
+      },
+      {
+        "name": "hire_org_name",
+        "type": "String",
+        "position": "70"
+      },
+      {
+        "name": "hire_linkman",
+        "type": "String",
+        "position": "71"
+      },
+      {
+        "name": "hire_id",
+        "type": "String",
+        "position": "72"
+      },
+      {
+        "name": "hire_contact_telnum",
+        "type": "String",
+        "position": "73"
+      },
+      {
+        "name": "hire_mode",
+        "type": "String",
+        "position": "74"
+      },
+      {
+        "name": "hire_out_in",
+        "type": "String",
+        "position": "75"
+      },
+      {
+        "name": "hire_begin_date",
+        "type": "String",
+        "position": "76"
+      },
+      {
+        "name": "hire_end_date",
+        "type": "String",
+        "position": "77"
+      },
+      {
+        "name": "expire_time",
+        "type": "String",
+        "position": "78"
+      },
+      {
+        "name": "create_date",
+        "type": "String",
+        "position": "79"
+      },
+      {
+        "name": "property_belong",
+        "type": "String",
+        "position": "80"
+      },
+      {
+        "name": "max_charge",
+        "type": "String",
+        "position": "81"
+      },
+      {
+        "name": "nms_identifier",
+        "type": "String",
+        "position": "82"
+      },
+      {
+        "name": "old_id_rim",
+        "type": "String",
+        "position": "83"
+      },
+      {
+        "name": "lan_id",
+        "type": "String",
+        "position": "84"
+      },
+      {
+        "name": "res_cover_area",
+        "type": "String",
+        "position": "85"
+      },
+      {
+        "name": "create_op",
+        "type": "String",
+        "position": "86"
+      },
+      {
+        "name": "bits_sys_id",
+        "type": "String",
+        "position": "87"
+      },
+      {
+        "name": "x",
+        "type": "String",
+        "position": "88"
+      },
+      {
+        "name": "y",
+        "type": "String",
+        "position": "89"
+      },
+      {
+        "name": "up_sps_code",
+        "type": "String",
+        "position": "90"
+      },
+      {
+        "name": "eqp_address",
+        "type": "String",
+        "position": "91"
+      },
+      {
+        "name": "epq_domain",
+        "type": "String",
+        "position": "92"
+      },
+      {
+        "name": "pvc_qos",
+        "type": "String",
+        "position": "93"
+      },
+      {
+        "name": "support_prod_type",
+        "type": "String",
+        "position": "94"
+      },
+      {
+        "name": "user_access_type",
+        "type": "String",
+        "position": "95"
+      },
+      {
+        "name": "city_village",
+        "type": "String",
+        "position": "96"
+      },
+      {
+        "name": "super_eqp_type",
+        "type": "String",
+        "position": "97"
+      },
+      {
+        "name": "pon_net_type",
+        "type": "String",
+        "position": "98"
+      },
+      {
+        "name": "resmaxrate",
+        "type": "String",
+        "position": "99"
+      },
+      {
+        "name": "ip_address_type",
+        "type": "String",
+        "position": "100"
+      },
+      {
+        "name": "service_scale",
+        "type": "String",
+        "position": "101"
+      },
+      {
+        "name": "reachability_rate",
+        "type": "String",
+        "position": "102"
+      },
+      {
+        "name": "read_str",
+        "type": "String",
+        "position": "103"
+      },
+      {
+        "name": "write_str",
+        "type": "String",
+        "position": "104"
+      },
+      {
+        "name": "user_reachability_rate",
+        "type": "String",
+        "position": "105"
+      },
+      {
+        "name": "ip_platform_rate",
+        "type": "String",
+        "position": "106"
+      },
+      {
+        "name": "is_cyw_mnt",
+        "type": "String",
+        "position": "107"
+      },
+      {
+        "name": "netword_identity",
+        "type": "String",
+        "position": "108"
+      },
+      {
+        "name": "eqp_level",
+        "type": "String",
+        "position": "109"
+      },
+      {
+        "name": "belong_network",
+        "type": "String",
+        "position": "110"
+      },
+      {
+        "name": "cpmis_project_id",
+        "type": "String",
+        "position": "111"
+      },
+      {
+        "name": "business_grade",
+        "type": "String",
+        "position": "112"
+      },
+      {
+        "name": "cust_grade",
+        "type": "String",
+        "position": "113"
+      },
+      {
+        "name": "is_uprecv",
+        "type": "String",
+        "position": "114"
+      },
+      {
+        "name": "is_govern_entern",
+        "type": "String",
+        "position": "115"
+      },
+      {
+        "name": "mfr_id",
+        "type": "String",
+        "position": "116"
+      },
+      {
+        "name": "project_state",
+        "type": "String",
+        "position": "117"
+      },
+      {
+        "name": "bldg_id",
+        "type": "String",
+        "position": "118"
+      },
+      {
+        "name": "hourse_id",
+        "type": "String",
+        "position": "119"
+      },
+      {
+        "name": "addr_segm_id",
+        "type": "String",
+        "position": "120"
+      },
+      {
+        "name": "substation_id",
+        "type": "String",
+        "position": "121"
+      },
+      {
+        "name": "roles",
+        "type": "String",
+        "position": "122"
+      },
+      {
+        "name": "is_ims",
+        "type": "String",
+        "position": "123"
+      },
+      {
+        "name": "network_id",
+        "type": "String",
+        "position": "124"
+      },
+      {
+        "name": "is_assign_line",
+        "type": "String",
+        "position": "125"
+      },
+      {
+        "name": "mnt_unit",
+        "type": "String",
+        "position": "126"
+      },
+      {
+        "name": "signal_code",
+        "type": "String",
+        "position": "127"
+      },
+      {
+        "name": "long_local_id",
+        "type": "String",
+        "position": "128"
+      },
+      {
+        "name": "standard_name",
+        "type": "String",
+        "position": "129"
+      },
+      {
+        "name": "standard_code",
+        "type": "String",
+        "position": "130"
+      },
+      {
+        "name": "is_last_grade",
+        "type": "String",
+        "position": "131"
+      },
+      {
+        "name": "private_capital_number",
+        "type": "String",
+        "position": "132"
+      },
+      {
+        "name": "is_private_capital",
+        "type": "String",
+        "position": "133"
+      },
+      {
+        "name": "mnt_type_id",
+        "type": "String",
+        "position": "134"
+      },
+      {
+        "name": "safe_level",
+        "type": "String",
+        "position": "135"
+      },
+      {
+        "name": "switch_role_id",
+        "type": "String",
+        "position": "136"
+      },
+      {
+        "name": "voice_ip",
+        "type": "String",
+        "position": "137"
+      },
+      {
+        "name": "is_skip_distribute",
+        "type": "String",
+        "position": "138"
+      },
+      {
+        "name": "node_code_state",
+        "type": "String",
+        "position": "139"
+      },
+      {
+        "name": "is_agent",
+        "type": "String",
+        "position": "140"
+      },
+      {
+        "name": "agent_mnt_unit",
+        "type": "String",
+        "position": "141"
+      },
+      {
+        "name": "project_flag",
+        "type": "String",
+        "position": "142"
+      },
+      {
+        "name": "sub_speciality_id",
+        "type": "String",
+        "position": "143"
+      },
+      {
+        "name": "mnt_man",
+        "type": "String",
+        "position": "144"
+      },
+      {
+        "name": "mnt_man_tel",
+        "type": "String",
+        "position": "145"
+      },
+      {
+        "name": "original_name",
+        "type": "String",
+        "position": "146"
+      },
+      {
+        "name": "node_no",
+        "type": "String",
+        "position": "147"
+      },
+      {
+        "name": "parent_type_id",
+        "type": "String",
+        "position": "148"
+      },
+      {
+        "name": "build_model_id",
+        "type": "String",
+        "position": "149"
+      },
+      {
+        "name": "prop_char_id",
+        "type": "String",
+        "position": "150"
+      },
+      {
+        "name": "ems_name",
+        "type": "String",
+        "position": "151"
+      },
+      {
+        "name": "mnt_level",
+        "type": "String",
+        "position": "152"
+      },
+      {
+        "name": "mac_address",
+        "type": "String",
+        "position": "153"
+      },
+      {
+        "name": "power",
+        "type": "String",
+        "position": "154"
+      },
+      {
+        "name": "conn_type",
+        "type": "String",
+        "position": "155"
+      },
+      {
+        "name": "maintain_contact",
+        "type": "String",
+        "position": "156"
+      },
+      {
+        "name": "power_amount",
+        "type": "String",
+        "position": "157"
+      },
+      {
+        "name": "max_alarm_level",
+        "type": "String",
+        "position": "158"
+      },
+      {
+        "name": "length",
+        "type": "String",
+        "position": "159"
+      },
+      {
+        "name": "width",
+        "type": "String",
+        "position": "160"
+      },
+      {
+        "name": "heigth",
+        "type": "String",
+        "position": "161"
+      },
+      {
+        "name": "plat_id",
+        "type": "String",
+        "position": "162"
+      },
+      {
+        "name": "life_cycle",
+        "type": "String",
+        "position": "163"
+      },
+      {
+        "name": "nms_orig_res_id",
+        "type": "String",
+        "position": "164"
+      },
+      {
+        "name": "nms_orig_res_name",
+        "type": "String",
+        "position": "165"
+      },
+      {
+        "name": "ems_orig_res_id",
+        "type": "String",
+        "position": "166"
+      },
+      {
+        "name": "ems_orig_res_name",
+        "type": "String",
+        "position": "167"
+      },
+      {
+        "name": "mnt_property",
+        "type": "String",
+        "position": "168"
+      },
+      {
+        "name": "is_liclense_unit",
+        "type": "String",
+        "position": "169"
+      },
+      {
+        "name": "liclense_unit_id",
+        "type": "String",
+        "position": "170"
+      },
+      {
+        "name": "design_purpose",
+        "type": "String",
+        "position": "171"
+      },
+      {
+        "name": "is_co_construction",
+        "type": "String",
+        "position": "172"
+      },
+      {
+        "name": "is_sharing",
+        "type": "String",
+        "position": "173"
+      },
+      {
+        "name": "construction_unit",
+        "type": "String",
+        "position": "174"
+      },
+      {
+        "name": "sharing_unit",
+        "type": "String",
+        "position": "175"
+      },
+      {
+        "name": "is_importportect",
+        "type": "String",
+        "position": "176"
+      },
+      {
+        "name": "sw_patch_ver",
+        "type": "String",
+        "position": "177"
+      },
+      {
+        "name": "mend_no",
+        "type": "String",
+        "position": "178"
+      },
+      {
+        "name": "hub_port",
+        "type": "String",
+        "position": "179"
+      },
+      {
+        "name": "coverage_area",
+        "type": "String",
+        "position": "180"
+      },
+      {
+        "name": "cover_area",
+        "type": "String",
+        "position": "181"
+      },
+      {
+        "name": "vendor_id",
+        "type": "String",
+        "position": "182"
+      },
+      {
+        "name": "ip_address",
+        "type": "String",
+        "position": "183"
+      },
+      {
+        "name": "max_card_num",
+        "type": "String",
+        "position": "184"
+      },
+      {
+        "name": "config_cpu_num",
+        "type": "String",
+        "position": "185"
+      },
+      {
+        "name": "config_user_num",
+        "type": "String",
+        "position": "186"
+      },
+      {
+        "name": "wo_id",
+        "type": "String",
+        "position": "187"
+      },
+      {
+        "name": "sw_pacth_ver",
+        "type": "String",
+        "position": "188"
+      },
+      {
+        "name": "check_man",
+        "type": "String",
+        "position": "189"
+      },
+      {
+        "name": "start_num",
+        "type": "String",
+        "position": "190"
+      },
+      {
+        "name": "material_no",
+        "type": "String",
+        "position": "191"
+      },
+      {
+        "name": "check_date",
+        "type": "String",
+        "position": "192"
+      },
+      {
+        "name": "capacity",
+        "type": "String",
+        "position": "193"
+      },
+      {
+        "name": "signal_code_id",
+        "type": "String",
+        "position": "194"
+      },
+      {
+        "name": "model",
+        "type": "String",
+        "position": "195"
+      },
+      {
+        "name": "agent_id",
+        "type": "String",
+        "position": "196"
+      },
+      {
+        "name": "managedelement_dn",
+        "type": "String",
+        "position": "197"
+      },
+      {
+        "name": "cust_id",
+        "type": "String",
+        "position": "198"
+      },
+      {
+        "name": "flow_state_id",
+        "type": "String",
+        "position": "199"
+      },
+      {
+        "name": "send_receive_mode",
+        "type": "String",
+        "position": "200"
+      },
+      {
+        "name": "location",
+        "type": "String",
+        "position": "201"
+      },
+      {
+        "name": "slot_no",
+        "type": "String",
+        "position": "202"
+      },
+      {
+        "name": "shelf_no",
+        "type": "String",
+        "position": "203"
+      },
+      {
+        "name": "wgs84_y",
+        "type": "String",
+        "position": "204"
+      },
+      {
+        "name": "wgs84_x",
+        "type": "String",
+        "position": "205"
+      },
+      {
+        "name": "resource_form",
+        "type": "String",
+        "position": "206"
+      },
+      {
+        "name": "share_type",
+        "type": "String",
+        "position": "207"
+      },
+      {
+        "name": "rack_no",
+        "type": "String",
+        "position": "208"
+      },
+      {
+        "name": "work_order_no",
+        "type": "String",
+        "position": "209"
+      },
+      {
+        "name": "p_sync_id",
+        "type": "String",
+        "position": "210"
+      },
+      {
+        "name": "p_work_order_no",
+        "type": "String",
+        "position": "211"
+      },
+      {
+        "name": "district_id",
+        "type": "String",
+        "position": "212"
+      },
+      {
+        "name": "approval_number",
+        "type": "String",
+        "position": "213"
+      },
+      {
+        "name": "approval_date",
+        "type": "String",
+        "position": "214"
+      },
+      {
+        "name": "p_administrative_state",
+        "type": "String",
+        "position": "215"
+      },
+      {
+        "name": "p_operational_state",
+        "type": "String",
+        "position": "216"
+      },
+      {
+        "name": "omc_dn",
+        "type": "String",
+        "position": "217"
+      },
+      {
+        "name": "p_city_district_id",
+        "type": "String",
+        "position": "218"
+      },
+      {
+        "name": "gnodeb_id",
+        "type": "String",
+        "position": "219"
+      },
+      {
+        "name": "datacollect_time",
+        "type": "String",
+        "position": "220"
+      },
+      {
+        "name": "plmn",
+        "type": "String",
+        "position": "221"
+      },
+      {
+        "name": "administrative_state",
+        "type": "String",
+        "position": "222"
+      },
+      {
+        "name": "operational_state",
+        "type": "String",
+        "position": "223"
+      },
+      {
+        "name": "is_really_installed",
+        "type": "String",
+        "position": "224"
+      },
+      {
+        "name": "device_priority",
+        "type": "String",
+        "position": "225"
+      },
+      {
+        "name": "network_level",
+        "type": "String",
+        "position": "226"
+      },
+      {
+        "name": "p_confirm_status",
+        "type": "String",
+        "position": "227"
+      },
+      {
+        "name": "res_locked_state",
+        "type": "String",
+        "position": "228"
+      },
+      {
+        "name": "ems",
+        "type": "String",
+        "position": "229"
+      },
+      {
+        "name": "is_related_dis_system",
+        "type": "String",
+        "position": "230"
+      },
+      {
+        "name": "factory_loc_info",
+        "type": "String",
+        "position": "231"
+      },
+      {
+        "name": "rru_inst_addr",
+        "type": "String",
+        "position": "232"
+      },
+      {
+        "name": "sip_if_dev_code",
+        "type": "String",
+        "position": "233"
+      },
+      {
+        "name": "device_pool_host_name",
+        "type": "String",
+        "position": "234"
+      },
+      {
+        "name": "mb_interface_ip",
+        "type": "String",
+        "position": "235"
+      },
+      {
+        "name": "parent_station_level",
+        "type": "String",
+        "position": "236"
+      },
+      {
+        "name": "related_bbu_id",
+        "type": "String",
+        "position": "237"
+      },
+      {
+        "name": "gateway_addr_subnet_mask",
+        "type": "String",
+        "position": "238"
+      },
+      {
+        "name": "is_480_promise",
+        "type": "String",
+        "position": "239"
+      },
+      {
+        "name": "max_online_user_nbr",
+        "type": "String",
+        "position": "240"
+      },
+      {
+        "name": "property_belong_limit",
+        "type": "String",
+        "position": "241"
+      },
+      {
+        "name": "is_virtual",
+        "type": "String",
+        "position": "242"
+      },
+      {
+        "name": "max_process_num",
+        "type": "String",
+        "position": "243"
+      },
+      {
+        "name": "data_source",
+        "type": "String",
+        "position": "244"
+      },
+      {
+        "name": "is_support_auto_verify",
+        "type": "String",
+        "position": "245"
+      },
+      {
+        "name": "coop_model_id",
+        "type": "String",
+        "position": "246"
+      },
+      {
+        "name": "bd09_x",
+        "type": "String",
+        "position": "247"
+      },
+      {
+        "name": "bd09_y",
+        "type": "String",
+        "position": "248"
+      },
+      {
+        "name": "is_support_aout_verify",
+        "type": "String",
+        "position": "249"
+      },
+      {
+        "name": "bhca",
+        "type": "String",
+        "position": "250"
+      },
+      {
+        "name": "old_sys_id",
+        "type": "String",
+        "position": "251"
+      },
+      {
+        "name": "plane_type_id",
+        "type": "String",
+        "position": "252"
+      },
+      {
+        "name": "dual_power_module_id",
+        "type": "String",
+        "position": "253"
+      },
+      {
+        "name": "key_module_sharing_ability_id",
+        "type": "String",
+        "position": "254"
+      },
+      {
+        "name": "in_net_manage_id",
+        "type": "String",
+        "position": "255"
+      },
+      {
+        "name": "dual_power_sys_id",
+        "type": "String",
+        "position": "256"
+      },
+      {
+        "name": "over_protect_id",
+        "type": "String",
+        "position": "257"
+      },
+      {
+        "name": "bel_cloud_res_pool_id",
+        "type": "String",
+        "position": "258"
+      },
+      {
+        "name": "verify_priority",
+        "type": "String",
+        "position": "259"
+      },
+      {
+        "name": "is_support_otn_service_id",
+        "type": "String",
+        "position": "260"
+      },
+      {
+        "name": "actn_id",
+        "type": "String",
+        "position": "261"
+      },
+      {
+        "name": "delete_op",
+        "type": "String",
+        "position": "262"
+      },
+      {
+        "name": "is_direct_collect",
+        "type": "String",
+        "position": "263"
+      },
+      {
+        "name": "modify_date",
+        "type": "String",
+        "position": "264"
+      },
+      {
+        "name": "mtosi_id",
+        "type": "String",
+        "position": "265"
+      },
+      {
+        "name": "uuid",
+        "type": "String",
+        "position": "266"
+      },
+      {
+        "name": "pim_id",
+        "type": "String",
+        "position": "267"
+      },
+      {
+        "name": "is_twocore",
+        "type": "String",
+        "position": "268"
+      },
+      {
+        "name": "department_leader",
+        "type": "String",
+        "position": "269"
+      },
+      {
+        "name": "branch_leader",
+        "type": "String",
+        "position": "270"
+      },
+      {
+        "name": "net_partition",
+        "type": "String",
+        "position": "271"
+      },
+      {
+        "name": "b_mnt_man",
+        "type": "String",
+        "position": "272"
+      },
+      {
+        "name": "manager",
+        "type": "String",
+        "position": "273"
+      },
+      {
+        "name": "u_position",
+        "type": "String",
+        "position": "274"
+      },
+      {
+        "name": "monitor_ip",
+        "type": "String",
+        "position": "275"
+      },
+      {
+        "name": "street",
+        "type": "String",
+        "position": "276"
+      },
+      {
+        "name": "region_setid",
+        "type": "String",
+        "position": "277"
+      },
+      {
+        "name": "a_signalling",
+        "type": "String",
+        "position": "278"
+      },
+      {
+        "name": "is_socialization_id",
+        "type": "String",
+        "position": "279"
+      },
+      {
+        "name": "inservice_id",
+        "type": "String",
+        "position": "280"
+      },
+      {
+        "name": "is_auto_ne",
+        "type": "String",
+        "position": "281"
+      },
+      {
+        "name": "cpmis_res_id",
+        "type": "String",
+        "position": "282"
+      },
+      {
+        "name": "data_zone_id",
+        "type": "String",
+        "position": "283"
+      },
+      {
+        "name": "mark_time",
+        "type": "String",
+        "position": "284"
+      },
+      {
+        "name": "is_xy_mark_id",
+        "type": "String",
+        "position": "285"
+      },
+      {
+        "name": "source_prov_id",
+        "type": "String",
+        "position": "286"
+      },
+      {
+        "name": "source_res_id",
+        "type": "String",
+        "position": "287"
+      },
+      {
+        "name": "retreat_date",
+        "type": "String",
+        "position": "288"
+      },
+      {
+        "name": "retreat_order_no",
+        "type": "String",
+        "position": "289"
+      }
+    ],
+    "ods_df_wls_secconfig": [
+      {
+        "name": "sec_id",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "base_id",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "sec_no",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "mark",
+        "type": "String",
+        "position": "4"
+      },
+      {
+        "name": "frequency_count",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "busi_count",
+        "type": "String",
+        "position": "6"
+      },
+      {
+        "name": "mixer_type_id",
+        "type": "String",
+        "position": "7"
+      },
+      {
+        "name": "mixer_count",
+        "type": "String",
+        "position": "8"
+      },
+      {
+        "name": "frequency_point",
+        "type": "String",
+        "position": "9"
+      },
+      {
+        "name": "output",
+        "type": "String",
+        "position": "10"
+      },
+      {
+        "name": "state",
+        "type": "String",
+        "position": "11"
+      },
+      {
+        "name": "delete_state",
+        "type": "String",
+        "position": "12"
+      },
+      {
+        "name": "delete_time",
+        "type": "String",
+        "position": "13"
+      },
+      {
+        "name": "sec_name",
+        "type": "String",
+        "position": "14"
+      },
+      {
+        "name": "opr_state_id",
+        "type": "String",
+        "position": "15"
+      },
+      {
+        "name": "mnt_state_id",
+        "type": "String",
+        "position": "16"
+      },
+      {
+        "name": "near_sec",
+        "type": "String",
+        "position": "17"
+      },
+      {
+        "name": "lac",
+        "type": "String",
+        "position": "18"
+      },
+      {
+        "name": "nmfunction",
+        "type": "String",
+        "position": "19"
+      },
+      {
+        "name": "alias",
+        "type": "String",
+        "position": "20"
+      },
+      {
+        "name": "old_id_eqp",
+        "type": "String",
+        "position": "21"
+      },
+      {
+        "name": "old_sp",
+        "type": "String",
+        "position": "22"
+      },
+      {
+        "name": "bts_id",
+        "type": "String",
+        "position": "23"
+      },
+      {
+        "name": "out_eqp_id",
+        "type": "String",
+        "position": "24"
+      },
+      {
+        "name": "resource_from",
+        "type": "String",
+        "position": "25"
+      },
+      {
+        "name": "property_belong",
+        "type": "String",
+        "position": "26"
+      },
+      {
+        "name": "bts_sector",
+        "type": "String",
+        "position": "27"
+      },
+      {
+        "name": "sid",
+        "type": "String",
+        "position": "28"
+      },
+      {
+        "name": "nid",
+        "type": "String",
+        "position": "29"
+      },
+      {
+        "name": "exbsid",
+        "type": "String",
+        "position": "30"
+      },
+      {
+        "name": "txpn",
+        "type": "String",
+        "position": "31"
+      },
+      {
+        "name": "ant_lat",
+        "type": "String",
+        "position": "32"
+      },
+      {
+        "name": "ant_long",
+        "type": "String",
+        "position": "33"
+      },
+      {
+        "name": "ant_alt",
+        "type": "String",
+        "position": "34"
+      },
+      {
+        "name": "survey_acc",
+        "type": "String",
+        "position": "35"
+      },
+      {
+        "name": "sec_lat",
+        "type": "String",
+        "position": "36"
+      },
+      {
+        "name": "sec_long",
+        "type": "String",
+        "position": "37"
+      },
+      {
+        "name": "sec_alt",
+        "type": "String",
+        "position": "38"
+      },
+      {
+        "name": "ant_orient",
+        "type": "String",
+        "position": "39"
+      },
+      {
+        "name": "ant_opening",
+        "type": "String",
+        "position": "40"
+      },
+      {
+        "name": "mar",
+        "type": "String",
+        "position": "41"
+      },
+      {
+        "name": "ms_avg_height",
+        "type": "String",
+        "position": "42"
+      },
+      {
+        "name": "terrain_sd",
+        "type": "String",
+        "position": "43"
+      },
+      {
+        "name": "rtdc",
+        "type": "String",
+        "position": "44"
+      },
+      {
+        "name": "rtdc_acc",
+        "type": "String",
+        "position": "45"
+      },
+      {
+        "name": "flc",
+        "type": "String",
+        "position": "46"
+      },
+      {
+        "name": "flc_acc",
+        "type": "String",
+        "position": "47"
+      },
+      {
+        "name": "p_reptr",
+        "type": "String",
+        "position": "48"
+      },
+      {
+        "name": "pn_inc",
+        "type": "String",
+        "position": "49"
+      },
+      {
+        "name": "format_type",
+        "type": "String",
+        "position": "50"
+      },
+      {
+        "name": "msc_no",
+        "type": "String",
+        "position": "51"
+      },
+      {
+        "name": "lan_id",
+        "type": "String",
+        "position": "52"
+      },
+      {
+        "name": "create_date",
+        "type": "String",
+        "position": "53"
+      },
+      {
+        "name": "modify_op",
+        "type": "String",
+        "position": "54"
+      },
+      {
+        "name": "create_op",
+        "type": "String",
+        "position": "55"
+      },
+      {
+        "name": "modify_date",
+        "type": "String",
+        "position": "56"
+      },
+      {
+        "name": "tracking_area",
+        "type": "String",
+        "position": "57"
+      },
+      {
+        "name": "belong_network",
+        "type": "String",
+        "position": "58"
+      },
+      {
+        "name": "rac",
+        "type": "String",
+        "position": "59"
+      },
+      {
+        "name": "ci",
+        "type": "String",
+        "position": "60"
+      },
+      {
+        "name": "belong_sec",
+        "type": "String",
+        "position": "61"
+      },
+      {
+        "name": "nms_orig_res_id",
+        "type": "String",
+        "position": "62"
+      },
+      {
+        "name": "nms_orig_res_name",
+        "type": "String",
+        "position": "63"
+      },
+      {
+        "name": "ems_orig_res_id",
+        "type": "String",
+        "position": "64"
+      },
+      {
+        "name": "ems_orig_res_name",
+        "type": "String",
+        "position": "65"
+      },
+      {
+        "name": "x",
+        "type": "String",
+        "position": "66"
+      },
+      {
+        "name": "y",
+        "type": "String",
+        "position": "67"
+      },
+      {
+        "name": "rma",
+        "type": "String",
+        "position": "68"
+      },
+      {
+        "name": "tac",
+        "type": "String",
+        "position": "69"
+      },
+      {
+        "name": "tai",
+        "type": "String",
+        "position": "70"
+      },
+      {
+        "name": "res_type_id",
+        "type": "String",
+        "position": "71"
+      },
+      {
+        "name": "wo_id",
+        "type": "String",
+        "position": "72"
+      },
+      {
+        "name": "base_type",
+        "type": "String",
+        "position": "73"
+      },
+      {
+        "name": "wgs84_x",
+        "type": "String",
+        "position": "74"
+      },
+      {
+        "name": "wgs84_y",
+        "type": "String",
+        "position": "75"
+      },
+      {
+        "name": "frequency_point_type",
+        "type": "String",
+        "position": "76"
+      },
+      {
+        "name": "share_type",
+        "type": "String",
+        "position": "77"
+      },
+      {
+        "name": "share_unit",
+        "type": "String",
+        "position": "78"
+      },
+      {
+        "name": "is_share",
+        "type": "String",
+        "position": "79"
+      },
+      {
+        "name": "bcch_property",
+        "type": "String",
+        "position": "80"
+      },
+      {
+        "name": "bsic_property",
+        "type": "String",
+        "position": "81"
+      },
+      {
+        "name": "uplink_freq",
+        "type": "String",
+        "position": "82"
+      },
+      {
+        "name": "downlink_freq",
+        "type": "String",
+        "position": "83"
+      },
+      {
+        "name": "work_state",
+        "type": "String",
+        "position": "84"
+      },
+      {
+        "name": "is_boundary",
+        "type": "String",
+        "position": "85"
+      },
+      {
+        "name": "adjacent_pro",
+        "type": "String",
+        "position": "86"
+      },
+      {
+        "name": "is_second",
+        "type": "String",
+        "position": "87"
+      },
+      {
+        "name": "csfb",
+        "type": "String",
+        "position": "88"
+      },
+      {
+        "name": "is_aggre",
+        "type": "String",
+        "position": "89"
+      },
+      {
+        "name": "aggre_type",
+        "type": "String",
+        "position": "90"
+      },
+      {
+        "name": "freq_type",
+        "type": "String",
+        "position": "91"
+      },
+      {
+        "name": "pcell_id",
+        "type": "String",
+        "position": "92"
+      },
+      {
+        "name": "related_sector_id",
+        "type": "String",
+        "position": "93"
+      },
+      {
+        "name": "notes",
+        "type": "String",
+        "position": "94"
+      },
+      {
+        "name": "cell_size",
+        "type": "String",
+        "position": "95"
+      },
+      {
+        "name": "sac",
+        "type": "String",
+        "position": "96"
+      },
+      {
+        "name": "ta_list",
+        "type": "String",
+        "position": "97"
+      },
+      {
+        "name": "cover_scene_no",
+        "type": "String",
+        "position": "98"
+      },
+      {
+        "name": "cover_scene_explain",
+        "type": "String",
+        "position": "99"
+      },
+      {
+        "name": "work_order_no",
+        "type": "String",
+        "position": "100"
+      },
+      {
+        "name": "p_sync_id",
+        "type": "String",
+        "position": "101"
+      },
+      {
+        "name": "is_bear_internetbusiness",
+        "type": "String",
+        "position": "102"
+      },
+      {
+        "name": "mfr_id",
+        "type": "String",
+        "position": "103"
+      },
+      {
+        "name": "nr_cell_du_id",
+        "type": "String",
+        "position": "104"
+      },
+      {
+        "name": "pci",
+        "type": "String",
+        "position": "105"
+      },
+      {
+        "name": "plmn",
+        "type": "String",
+        "position": "106"
+      },
+      {
+        "name": "admin_regions",
+        "type": "String",
+        "position": "107"
+      },
+      {
+        "name": "enodeb_id",
+        "type": "String",
+        "position": "108"
+      },
+      {
+        "name": "datacollect_time",
+        "type": "String",
+        "position": "109"
+      },
+      {
+        "name": "administrative_state",
+        "type": "String",
+        "position": "110"
+      },
+      {
+        "name": "operational_state",
+        "type": "String",
+        "position": "111"
+      },
+      {
+        "name": "ar_fcn_ul",
+        "type": "String",
+        "position": "112"
+      },
+      {
+        "name": "bscha_bwul",
+        "type": "String",
+        "position": "113"
+      },
+      {
+        "name": "ar_fcn_dl",
+        "type": "String",
+        "position": "114"
+      },
+      {
+        "name": "bscha_bwdl",
+        "type": "String",
+        "position": "115"
+      },
+      {
+        "name": "ul_bwpidlist",
+        "type": "String",
+        "position": "116"
+      },
+      {
+        "name": "dl_bwpidlist",
+        "type": "String",
+        "position": "117"
+      },
+      {
+        "name": "gnodeb_id",
+        "type": "String",
+        "position": "118"
+      },
+      {
+        "name": "operator_gnbid",
+        "type": "String",
+        "position": "119"
+      },
+      {
+        "name": "operator_plmn",
+        "type": "String",
+        "position": "120"
+      },
+      {
+        "name": "deploy_type",
+        "type": "String",
+        "position": "121"
+      },
+      {
+        "name": "power",
+        "type": "String",
+        "position": "122"
+      },
+      {
+        "name": "p_confirm_status",
+        "type": "String",
+        "position": "123"
+      },
+      {
+        "name": "res_locked_state",
+        "type": "String",
+        "position": "124"
+      },
+      {
+        "name": "life_cycle",
+        "type": "String",
+        "position": "125"
+      },
+      {
+        "name": "upsteam_bandwidth",
+        "type": "String",
+        "position": "126"
+      },
+      {
+        "name": "downsteam_bandwidth",
+        "type": "String",
+        "position": "127"
+      },
+      {
+        "name": "community_level",
+        "type": "String",
+        "position": "128"
+      },
+      {
+        "name": "is_anchor_station",
+        "type": "String",
+        "position": "129"
+      },
+      {
+        "name": "super_sec_id",
+        "type": "String",
+        "position": "130"
+      },
+      {
+        "name": "old_sys_id",
+        "type": "String",
+        "position": "131"
+      },
+      {
+        "name": "use_time",
+        "type": "String",
+        "position": "132"
+      },
+      {
+        "name": "physic_cell_id",
+        "type": "String",
+        "position": "133"
+      },
+      {
+        "name": "band_indicator",
+        "type": "String",
+        "position": "134"
+      },
+      {
+        "name": "p_city_district_id",
+        "type": "String",
+        "position": "135"
+      },
+      {
+        "name": "district_id",
+        "type": "String",
+        "position": "136"
+      },
+      {
+        "name": "cp_type",
+        "type": "String",
+        "position": "137"
+      },
+      {
+        "name": "high_speed_flag",
+        "type": "String",
+        "position": "138"
+      },
+      {
+        "name": "pci_list",
+        "type": "String",
+        "position": "139"
+      },
+      {
+        "name": "plmn_id_list",
+        "type": "String",
+        "position": "140"
+      },
+      {
+        "name": "preamble_fmt",
+        "type": "String",
+        "position": "141"
+      },
+      {
+        "name": "work_mode",
+        "type": "String",
+        "position": "142"
+      },
+      {
+        "name": "tx_rx_mode",
+        "type": "String",
+        "position": "143"
+      },
+      {
+        "name": "cell_admin_state",
+        "type": "String",
+        "position": "144"
+      },
+      {
+        "name": "rho_b",
+        "type": "String",
+        "position": "145"
+      },
+      {
+        "name": "ul_cyclic_prefix",
+        "type": "String",
+        "position": "146"
+      },
+      {
+        "name": "is_high_speed",
+        "type": "String",
+        "position": "147"
+      },
+      {
+        "name": "cell_active_state",
+        "type": "String",
+        "position": "148"
+      },
+      {
+        "name": "earfcn",
+        "type": "String",
+        "position": "149"
+      },
+      {
+        "name": "maximum_transmission_power",
+        "type": "String",
+        "position": "150"
+      },
+      {
+        "name": "rho_a",
+        "type": "String",
+        "position": "151"
+      },
+      {
+        "name": "bch_power",
+        "type": "String",
+        "position": "152"
+      },
+      {
+        "name": "cell_mbms_switch",
+        "type": "String",
+        "position": "153"
+      },
+      {
+        "name": "dl_cyclic_prefix",
+        "type": "String",
+        "position": "154"
+      },
+      {
+        "name": "pa",
+        "type": "String",
+        "position": "155"
+      },
+      {
+        "name": "pb",
+        "type": "String",
+        "position": "156"
+      },
+      {
+        "name": "rs_epre",
+        "type": "String",
+        "position": "157"
+      },
+      {
+        "name": "spe_sub_frame_type",
+        "type": "String",
+        "position": "158"
+      },
+      {
+        "name": "sub_frame_type",
+        "type": "String",
+        "position": "159"
+      },
+      {
+        "name": "data_source",
+        "type": "String",
+        "position": "160"
+      },
+      {
+        "name": "bd09_x",
+        "type": "String",
+        "position": "161"
+      },
+      {
+        "name": "bd09_y",
+        "type": "String",
+        "position": "162"
+      },
+      {
+        "name": "region_id",
+        "type": "String",
+        "position": "163"
+      },
+      {
+        "name": "delete_op",
+        "type": "String",
+        "position": "164"
+      },
+      {
+        "name": "flow_state_id",
+        "type": "String",
+        "position": "165"
+      },
+      {
+        "name": "street",
+        "type": "String",
+        "position": "166"
+      },
+      {
+        "name": "is_street_boundary",
+        "type": "String",
+        "position": "167"
+      },
+      {
+        "name": "street_boundary_list",
+        "type": "String",
+        "position": "168"
+      },
+      {
+        "name": "is_socialization_id",
+        "type": "String",
+        "position": "169"
+      },
+      {
+        "name": "is_xy_mark_id",
+        "type": "String",
+        "position": "170"
+      },
+      {
+        "name": "mark_time",
+        "type": "String",
+        "position": "171"
+      },
+      {
+        "name": "retreat_date",
+        "type": "String",
+        "position": "172"
+      },
+      {
+        "name": "retreat_order_no",
+        "type": "String",
+        "position": "173"
+      }
+    ],
+    "ods_spc_region": [
+      {
+        "name": "region_id",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "region_no",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "region_name",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "alias",
+        "type": "String",
+        "position": "4"
+      },
+      {
+        "name": "grade_id",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "type_id",
+        "type": "String",
+        "position": "6"
+      },
+      {
+        "name": "address",
+        "type": "String",
+        "position": "7"
+      },
+      {
+        "name": "super_region_id",
+        "type": "String",
+        "position": "8"
+      },
+      {
+        "name": "parent_id",
+        "type": "String",
+        "position": "9"
+      },
+      {
+        "name": "delete_state",
+        "type": "String",
+        "position": "10"
+      },
+      {
+        "name": "delete_time",
+        "type": "String",
+        "position": "11"
+      },
+      {
+        "name": "notes",
+        "type": "String",
+        "position": "12"
+      },
+      {
+        "name": "name_ab",
+        "type": "String",
+        "position": "13"
+      },
+      {
+        "name": "res_type_id",
+        "type": "String",
+        "position": "14"
+      },
+      {
+        "name": "china_name_ab",
+        "type": "String",
+        "position": "15"
+      },
+      {
+        "name": "modify_op",
+        "type": "String",
+        "position": "16"
+      },
+      {
+        "name": "modiry_date",
+        "type": "String",
+        "position": "17"
+      },
+      {
+        "name": "create_time",
+        "type": "String",
+        "position": "18"
+      },
+      {
+        "name": "sync_date",
+        "type": "String",
+        "position": "19"
+      },
+      {
+        "name": "old_id_eqp",
+        "type": "String",
+        "position": "20"
+      },
+      {
+        "name": "old_sp",
+        "type": "String",
+        "position": "21"
+      },
+      {
+        "name": "lan_id",
+        "type": "String",
+        "position": "22"
+      },
+      {
+        "name": "ppdom_id",
+        "type": "String",
+        "position": "23"
+      },
+      {
+        "name": "create_date",
+        "type": "String",
+        "position": "24"
+      },
+      {
+        "name": "create_op",
+        "type": "String",
+        "position": "25"
+      },
+      {
+        "name": "crm_region",
+        "type": "String",
+        "position": "26"
+      },
+      {
+        "name": "crm_lan",
+        "type": "String",
+        "position": "27"
+      },
+      {
+        "name": "sp_region_id",
+        "type": "String",
+        "position": "28"
+      },
+      {
+        "name": "country_type",
+        "type": "String",
+        "position": "29"
+      },
+      {
+        "name": "wo_id",
+        "type": "String",
+        "position": "30"
+      },
+      {
+        "name": "mnt_state_id",
+        "type": "String",
+        "position": "31"
+      },
+      {
+        "name": "seq",
+        "type": "String",
+        "position": "32"
+      },
+      {
+        "name": "region_code",
+        "type": "String",
+        "position": "33"
+      },
+      {
+        "name": "p_region_code",
+        "type": "String",
+        "position": "34"
+      }
+    ],
+    "pm_4g_5g_wireless_kpi_collect": [
+      {
+        "name": "partition_day",
+        "type": "Date",
+        "position": "1"
+      },
+      {
+        "name": "granularity",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "network",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "factory",
+        "type": "String",
+        "position": "4"
+      },
+      {
+        "name": "region",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "site_id",
+        "type": "String",
+        "position": "6"
+      },
+      {
+        "name": "site_name",
+        "type": "String",
+        "position": "7"
+      },
+      {
+        "name": "cell_id",
+        "type": "String",
+        "position": "8"
+      },
+      {
+        "name": "CGI",
+        "type": "String",
+        "position": "9"
+      },
+      {
+        "name": "cell_name",
+        "type": "String",
+        "position": "10"
+      },
+      {
+        "name": "NBplmn",
+        "type": "String",
+        "position": "11"
+      },
+      {
+        "name": "ul_user_flow_Traffic_MB",
+        "type": "String",
+        "position": "12"
+      },
+      {
+        "name": "dl_user_flow_Traffic_MB",
+        "type": "String",
+        "position": "13"
+      },
+      {
+        "name": "user_Traffic_volume_erl",
+        "type": "String",
+        "position": "14"
+      },
+      {
+        "name": "Rrc_Max",
+        "type": "String",
+        "position": "15"
+      }
+    ],
+    "yw_yh_zfb_daily": [
+      {
+        "name": "SERIAL_NUMBER",
+        "type": "String",
+        "position": "1"
+      },
+      {
+        "name": "USER_TYPE_CODE",
+        "type": "String",
+        "position": "2"
+      },
+      {
+        "name": "JOIN_MONTH",
+        "type": "String",
+        "position": "3"
+      },
+      {
+        "name": "PRODUCT_ID",
+        "type": "String",
+        "position": "4"
+      },
+      {
+        "name": "CUST_ID",
+        "type": "String",
+        "position": "5"
+      },
+      {
+        "name": "USER_ID",
+        "type": "String",
+        "position": "6"
+      },
+      {
+        "name": "ACCOUNT_REMAINING",
+        "type": "String",
+        "position": "7"
+      },
+      {
+        "name": "data_date",
+        "type": "String",
+        "position": "8"
+      },
+      {
+        "name": "RESIDENT_AREA",
+        "type": "Nullable(String)",
+        "position": "9"
+      },
+      {
+        "name": "RESIDENT_CITY",
+        "type": "Nullable(String)",
+        "position": "10"
+      },
+      {
+        "name": "BROADBAND_OPERATOR",
+        "type": "String",
+        "position": "11"
+      },
+      {
+        "name": "BROADBAND_CITY",
+        "type": "String",
+        "position": "12"
+      },
+      {
+        "name": "IDLE_TIME_PERIOD",
+        "type": "String",
+        "position": "13"
+      },
+      {
+        "name": "NIGHT_TABLES",
+        "type": "String",
+        "position": "14"
+      },
+      {
+        "name": "CUR_INCOME_AVGTHREE",
+        "type": "String",
+        "position": "15"
+      },
+      {
+        "name": "CUR_INCOME_ZQ_AVGTHREE",
+        "type": "String",
+        "position": "16"
+      }
+    ]
+  }
+}

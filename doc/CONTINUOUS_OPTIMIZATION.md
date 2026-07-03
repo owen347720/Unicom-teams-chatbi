@@ -4,12 +4,14 @@
 
 Benchmark artifacts are stored in:
 
-- `benchmark/v1.1-gold-1000`: 1000-question gold benchmark suite for business evaluation
+- `benchmark/v1.2-schema-gold-1000`: current 1000-question gold benchmark suite generated from live A100 ClickHouse schema/profile
+- `benchmark/v1.1-gold-1000`: superseded format prototype; do not use as the primary benchmark
 - `benchmark/v1.0-100`: 100-question benchmark suite for ongoing optimization
 - `benchmark/v1.0`: 10-run smoke baseline
 - `benchmark/v1.0-r3`: 30-run baseline used for comparison
 
-Use `benchmark/v1.1-gold-1000/cases.json` as the primary benchmark question set.
+Use `benchmark/v1.2-schema-gold-1000/cases.json` as the primary benchmark
+question set after gold SQL snapshots are populated.
 Use `benchmark/v1.0-100/cases.json` as a lighter smoke/regression suite.
 Use `benchmark/v1.0-r3/summary.json`, `results.csv`, and `results.jsonl` as the
 historical baseline before prompt, schema-context, SQL-normalization, or model
@@ -26,9 +28,8 @@ Current V1.0 baseline:
 
 ## Optimization Backlog
 
-0. Execute V1.1 gold snapshots and full system run after A100 SSH/HTTP access is
-   restored. The suite is generated locally, but `expected_result` is currently
-   pending for SQL cases.
+0. Finish V1.2 schema-driven gold snapshots on A100, then run the full system
+   benchmark against `benchmark/v1.2-schema-gold-1000/cases.json`.
 
 1. Fix ClickHouse alias safety.
    Generated SQL frequently uses Chinese aliases without quoting. Add prompt
@@ -49,6 +50,6 @@ Current V1.0 baseline:
    Average estimated total tokens are about `2961.8`. Table ranking and field
    pruning should be tightened after accuracy stabilizes.
 
-5. Expand benchmark coverage.
-   Add more cases for date filters, zero-flow tables, network KPI tables,
-   ambiguous community names, and no-answer questions.
+5. Keep benchmark generation schema-driven.
+   Refresh `benchmark/schema-live` from A100 before creating a new baseline, and
+   fail generation if required table samples are missing.
