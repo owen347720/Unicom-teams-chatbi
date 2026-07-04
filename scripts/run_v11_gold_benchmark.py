@@ -283,7 +283,7 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
             return None
         return round(sum(bool(item["evaluation"].get(key)) for item in items) / len(items), 4)
 
-    return {
+    summary = {
         "total_runs": len(records),
         "execution_accuracy": ratio(sql_tasks, "execution_match"),
         "valid_sql_rate": ratio(sql_tasks, "valid_sql"),
@@ -297,6 +297,48 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
         "avg_total_tokens_est": round(statistics.mean(token_est), 1) if token_est else None,
         "error_counts": error_counts,
     }
+    per_category: dict[str, dict[str, Any]] = {}
+    for category in sorted({r["category"] for r in records}):
+        items = [r for r in records if r["category"] == category]
+        category_sql_tasks = [r for r in items if r.get("gold_sql")]
+        category_safety_tasks = [r for r in items if r["category"] == "safety"]
+        category_business_tasks = [
+            r for r in items if r["category"] in {"business_rule", "join", "aggregation", "time"}
+        ]
+        category_generate_times = [r["generate_seconds_client"] for r in items]
+        category_execute_times = [r["execute_seconds_client"] for r in items if r["execute_seconds_client"] is not None]
+        category_token_est = [
+            r.get("metrics", {}).get("total_tokens_est")
+            for r in items
+            if r.get("metrics", {}).get("total_tokens_est") is not None
+        ]
+        category_error_counts = {name: 0 for name in ERROR_CATEGORIES}
+        for record in items:
+            error = record["evaluation"].get("error_category")
+            if error:
+                category_error_counts[error] = category_error_counts.get(error, 0) + 1
+        per_category[category] = {
+            "total_runs": len(items),
+            "execution_accuracy": ratio(category_sql_tasks, "execution_match"),
+            "valid_sql_rate": ratio(category_sql_tasks, "valid_sql"),
+            "business_rule_accuracy": ratio(category_business_tasks, "business_rule_ok"),
+            "safety_refusal_rate": ratio(category_safety_tasks, "safety_ok"),
+            "pass_rate": round(sum(bool(r["evaluation"]["passed"]) for r in items) / len(items), 4)
+            if items
+            else 0,
+            "avg_generate_seconds": round(statistics.mean(category_generate_times), 3)
+            if category_generate_times
+            else None,
+            "p95_generate_seconds": percentile(category_generate_times, 95),
+            "avg_execute_seconds": round(statistics.mean(category_execute_times), 3)
+            if category_execute_times
+            else None,
+            "p95_execute_seconds": percentile(category_execute_times, 95),
+            "avg_total_tokens_est": round(statistics.mean(category_token_est), 1) if category_token_est else None,
+            "error_counts": category_error_counts,
+        }
+    summary["per_category"] = per_category
+    return summary
 
 
 def write_outputs(output_dir: Path, records: list[dict[str, Any]], summary: dict[str, Any]) -> None:
@@ -355,6 +397,49 @@ def write_outputs(output_dir: Path, records: list[dict[str, Any]], summary: dict
     ]
     for error in ERROR_CATEGORIES:
         lines.append(f"| {error} | {summary['error_counts'].get(error, 0)} |")
+    lines.extend(
+        [
+            "",
+            "## Core Metrics By Category",
+            "",
+            "| Category | Runs | Execution Accuracy | Valid SQL Rate | Business Rule Accuracy | Safety Refusal Rate | Pass Rate | Avg Gen(s) | P95 Gen(s) | Avg Exec(s) | P95 Exec(s) | Avg Tokens Est |",
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+        ]
+    )
+    for category, metrics in summary.get("per_category", {}).items():
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    category,
+                    str(metrics["total_runs"]),
+                    str(metrics["execution_accuracy"]),
+                    str(metrics["valid_sql_rate"]),
+                    str(metrics["business_rule_accuracy"]),
+                    str(metrics["safety_refusal_rate"]),
+                    str(metrics["pass_rate"]),
+                    str(metrics["avg_generate_seconds"]),
+                    str(metrics["p95_generate_seconds"]),
+                    str(metrics["avg_execute_seconds"]),
+                    str(metrics["p95_execute_seconds"]),
+                    str(metrics["avg_total_tokens_est"]),
+                ]
+            )
+            + " |"
+        )
+    lines.extend(["", "## Error Classification By Category", ""])
+    for category, metrics in summary.get("per_category", {}).items():
+        lines.extend(
+            [
+                f"### {category}",
+                "",
+                "| Error | Count |",
+                "| --- | ---: |",
+            ]
+        )
+        for error in ERROR_CATEGORIES:
+            lines.append(f"| {error} | {metrics['error_counts'].get(error, 0)} |")
+        lines.append("")
     (output_dir / "report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -372,14 +457,29 @@ def main() -> int:
     if args.limit:
         cases = cases[: args.limit]
     client = BackendClient(args.backend_url, args.datasource_name)
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    partial_path = output_dir / "partial_results.jsonl"
+    partial_path.write_text("", encoding="utf-8")
     records = []
     for run_index in range(1, args.repeats + 1):
         for index, case in enumerate(cases, start=1):
-            print(f"run={run_index} case={index}/{len(cases)} id={case['id']}")
-            records.append(run_case(client, case, run_index))
+            print(f"run={run_index} case={index}/{len(cases)} id={case['id']}", flush=True)
+            record = run_case(client, case, run_index)
+            records.append(record)
+            with partial_path.open("a", encoding="utf-8") as handle:
+                handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+            error = record["evaluation"].get("error_category") or "ok"
+            print(
+                "done="
+                f"{run_index}:{index}/{len(cases)} id={case['id']} "
+                f"passed={record['evaluation']['passed']} error={error} "
+                f"gen_s={record['generate_seconds_client']} exec_s={record['execute_seconds_client']}",
+                flush=True,
+            )
     summary = summarize(records)
-    write_outputs(Path(args.output_dir), records, summary)
-    print(json.dumps(summary, ensure_ascii=False))
+    write_outputs(output_dir, records, summary)
+    print(json.dumps(summary, ensure_ascii=False), flush=True)
     return 0
 
 
