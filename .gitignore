@@ -7,6 +7,11 @@
 *.log
 logs/
 
+# Benchmark raw run artifacts. Keep summary.json/report.md for committed reports.
+benchmark/*-run*/results.jsonl
+benchmark/*-run*/partial_results.jsonl
+benchmark/*-run*/results.csv
+
 # Dependencies
 node_modules/
 __pycache__/

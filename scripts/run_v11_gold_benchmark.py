@@ -377,7 +377,7 @@ def write_outputs(output_dir: Path, records: list[dict[str, Any]], summary: dict
         encoding="utf-8",
     )
     lines = [
-        "# V1.1 Gold Benchmark Run Report",
+        "# Gold Benchmark Run Report",
         "",
         f"- Total runs: `{summary['total_runs']}`",
         f"- Execution Accuracy: `{summary['execution_accuracy']}`",
