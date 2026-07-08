@@ -1,56 +1,47 @@
 ---
 name: text2sql-benchmark
-description: Run, refresh, validate, and interpret this repository's schema-driven Text2SQL benchmark. Use when asked to run benchmark/eval/regression tests, explain V1.0/V1.1/V1.2 benchmark results, compare Text2SQL accuracy before and after optimization, produce failure classification tables, or prepare benchmark artifacts for other teams.
+description: Design, adapt, run, validate, and interpret schema-driven Text2SQL benchmarks for any Text2SQL system. Use when asked to create or share benchmark suites, port this benchmark to another team's Text2SQL service, compare systems or versions, define evaluation metrics, classify SQL failures, or prepare repeatable Text2SQL evaluation artifacts.
 ---
 
 # Text2SQL Benchmark
 
 ## Core Rule
 
-Use V1.2 as the primary benchmark unless the user explicitly asks for historical V1.0/V1.1.
+Treat this as a portable evaluation method, not a deployment-specific runbook.
 
-- Primary suite: `benchmark/v1.2-schema-gold-1000/cases.json`
-- Gold SQL status: `850/850` SQL cases executed successfully on A100.
-- Current full run report: `benchmark/v1.2-schema-gold-1000-run-20260703/report.md`
-- Current full run summary: `benchmark/v1.2-schema-gold-1000-run-20260703/summary.json`
-- Historical V1.1 is superseded; do not present it as the main baseline.
+- A benchmark case must be tied to the target system's actual schema, dialect, permissions, and business rules.
+- Run the system through the same interface real users use whenever possible.
+- Keep gold SQL, expected result snapshots, metrics, and failure classifications separate from system-specific adapters.
+- Do not assume A100, Docker Compose, ClickHouse, Vanna, or this repository's API shape unless the user says that is the target system.
 
-Read `references/benchmark-guide.md` when you need detailed metric definitions, commands, result locations, or troubleshooting notes.
+Read `references/benchmark-guide.md` when you need detailed case format, metric definitions, adapter contracts, result structure, or examples from this repository.
 
 ## Standard Workflow
 
-1. Confirm the target suite and output directory.
-   - Default suite: `benchmark/v1.2-schema-gold-1000/cases.json`
-   - Default remote output pattern: `/data1/text2sql/benchmarks/v1.2-schema-gold-1000-run-YYYYMMDD`
+1. Identify the target system.
+   - Record input interface: HTTP API, SDK, CLI, web automation, or direct function call.
+   - Record SQL dialect and execution engine: ClickHouse, PostgreSQL, MySQL, Hive, Spark, Oracle, etc.
+   - Record access boundaries: allowed tables, denied tables, masking rules, tenant scope, and safety policy.
 
-2. If running on A100, verify services first:
+2. Build or adapt the benchmark suite.
+   - Prefer generating cases from the target system's live schema/profile.
+   - Include simple queries, aggregation, joins, time filters, business rules, noisy natural language, ambiguous questions, and safety/refusal cases.
+   - Store every case with `question`, `db_schema_version`, `allowed_tables`, `gold_sql`, `expected_result`, `business_rule`, `difficulty`, `category`, and `judge_method`.
 
-```bash
-ssh A100BMS-2 'docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep text2sql'
-```
+3. Implement a thin adapter for the target Text2SQL system.
+   - Input: user question plus optional schema/business context.
+   - Output: generated SQL or refusal/clarification response, latency, token usage if available, and raw metadata.
+   - Keep adapter code outside the gold data so multiple systems can be compared against the same benchmark.
 
-3. Run the benchmark through the backend API, not directly against ClickHouse:
+4. Execute generated SQL only inside a controlled read-only evaluation database.
+   - Use query timeouts.
+   - Block writes, DDL, external network/file functions, and cross-tenant data access.
+   - Snapshot result previews, not full sensitive datasets.
 
-```bash
-ssh A100BMS-2 '
-cd /data1/text2sql/releases/amd64-verify &&
-python3 -u run_v11_gold_benchmark.py \
-  --cases-file /data1/text2sql/benchmarks/v1.2-schema-gold-1000/cases.json \
-  --backend-url http://127.0.0.1:38000 \
-  --output-dir /data1/text2sql/benchmarks/v1.2-schema-gold-1000-run-YYYYMMDD
-'
-```
-
-For long runs, use `nohup` and monitor `run.log` plus `partial_results.jsonl`.
-
-4. Pull back only safe summary artifacts unless the user explicitly needs raw per-case files:
-
-```bash
-scp A100BMS-2:/data1/text2sql/benchmarks/v1.2-schema-gold-1000-run-YYYYMMDD/summary.json benchmark/v1.2-schema-gold-1000-run-YYYYMMDD/
-scp A100BMS-2:/data1/text2sql/benchmarks/v1.2-schema-gold-1000-run-YYYYMMDD/report.md benchmark/v1.2-schema-gold-1000-run-YYYYMMDD/
-```
-
-Do not commit `results.jsonl`, `partial_results.jsonl`, `results.csv`, or `run.log`; they may contain generated SQL with sensitive test prompts or identifiers.
+5. Produce repeatable reports.
+   - Save machine-readable `summary.json`.
+   - Save human-readable `report.md`.
+   - Save raw per-case logs separately and treat them as sensitive diagnostics.
 
 ## Reporting Requirements
 
@@ -68,8 +59,32 @@ Always include:
 - Failure classification table
 - Core metrics by category
 
-When summarizing failures, name concrete dominant causes. For the 20260703 V1.2 run, the main cause was SQL syntax failure, especially unquoted Chinese aliases.
+When summarizing failures, name concrete dominant causes and separate model behavior from adapter/runtime issues.
+
+## Portable Adapter Contract
+
+For each case, normalize the target system response into this shape:
+
+```json
+{
+  "case_id": "string",
+  "question": "string",
+  "response_type": "sql | refusal | clarification | error",
+  "generated_sql": "string or null",
+  "raw_response": "string or object",
+  "generate_seconds": 0.0,
+  "execute_seconds": 0.0,
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "total_tokens": 0,
+  "execution_status": "success | syntax_error | runtime_error | skipped",
+  "result_preview": "small stable snapshot or null",
+  "failure_class": "string or null"
+}
+```
+
+If token usage is unavailable, estimate it consistently and mark it as estimated in the report.
 
 ## Safety
 
-Never paste API keys, ClickHouse passwords, or raw PII into reports. Prefer `summary.json` and `report.md` for committed artifacts. Treat raw result files as local/private diagnostic artifacts.
+Never paste API keys, database passwords, raw PII, or full query result dumps into reports. Prefer `summary.json` and `report.md` for shareable artifacts. Treat raw result files as private diagnostics.

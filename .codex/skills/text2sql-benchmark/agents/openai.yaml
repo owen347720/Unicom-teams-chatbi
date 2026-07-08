@@ -1,4 +1,4 @@
 interface:
   display_name: "Text2SQL Benchmark"
-  short_description: "Run and interpret the schema-driven Text2SQL benchmark"
-  default_prompt: "Use $text2sql-benchmark to run the V1.2 benchmark and summarize core metrics."
+  short_description: "Design and run portable Text2SQL benchmarks"
+  default_prompt: "Use $text2sql-benchmark to adapt this benchmark to another Text2SQL system and summarize comparable metrics."
